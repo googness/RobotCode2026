@@ -119,4 +119,68 @@ public interface OperatorInterface {
   public default Trigger getLowerElevatorSlowButton() {
     return new Trigger(() -> false);
   }
+
+  // Jays Commands \\
+
+  public default Trigger theShooterFix() {
+    return new Trigger(() -> false);
+  }
+
+  public default Trigger getHubShot() {
+    return new Trigger(() -> false);
+  }
+
+  public default Trigger extendHoodAngle() {
+    return new Trigger(() -> false);
+  }
+
+  public default Trigger dShot() {
+    return new Trigger(() -> false);
+  }
+
+  public default Trigger retractHoodAngle() {
+    return new Trigger(() -> false);
+  }
+
+  public default Trigger extendHopper() {
+    return new Trigger(() -> false);
+  }
+
+  public default Trigger retractHopper() {
+    return new Trigger(() -> false);
+  }
+
+  public default Trigger runAccelerator() {
+    return new Trigger(() -> false);
+  }
+
+  public default Trigger runIntake() {
+    return new Trigger(() -> false);
+  }
+
+  public default Trigger runBelt() {
+    return new Trigger(() -> false);
+  }
+
+  public default Trigger extendHood() {
+    return new Trigger(() -> false);
+  }
+
+  public default Trigger retractHood() {
+    return new Trigger(() -> false);
+  }
+
+  public default Trigger getRotation() {
+    return new Trigger(() -> false);
+  }
+
+  public default Trigger resetVisionPos() {
+    return new Trigger(() -> false);
+  }
+
+  public default Trigger reverseIntake() {
+    return new Trigger(() -> false);
+  }
+
+  // Jays Commands \\
 }

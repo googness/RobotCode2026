@@ -80,10 +80,11 @@ public class OISelector {
       }
     }
 
-    if (Constants.getRobot() == RobotType.ROBOT_SIMBOT
-        || Constants.getRobot() == RobotType.ROBOT_XRP
-        || Constants.getRobot() == RobotType.ROBOT_VISION_TEST_PLATFORM
-        || Constants.getRobot() == RobotType.ROBOT_NORTHSTAR_TEST_PLATFORM) {
+    // if (Constants.getRobot() == RobotType.ROBOT_SIMBOT
+    //     || Constants.getRobot() == RobotType.ROBOT_XRP
+    //     || Constants.getRobot() == RobotType.ROBOT_VISION_TEST_PLATFORM
+    //     || Constants.getRobot() == RobotType.ROBOT_NORTHSTAR_TEST_PLATFORM) {
+    if (Constants.getRobot() == RobotType.ROBOT_SIMBOT) {
       nonCompetitionOperatorInterfaceWarning.set(false);
       return new SimDualJoysticksOI(0, 1);
     } else if (firstPort != null && secondPort != null && xBoxPort != null && thirdPort != null) {

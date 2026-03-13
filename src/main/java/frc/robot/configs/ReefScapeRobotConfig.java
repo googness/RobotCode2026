@@ -134,7 +134,7 @@ public class ReefScapeRobotConfig extends RobotConfig {
   private static final double DRIVE_FACING_ANGLE_KI = 0.0;
 
   // FIXME: specify the number of LEDs
-  //private static final int LED_COUNT = 85;
+  // private static final int LED_COUNT = 85;
 
   @Override
   public boolean getPhoenix6Licensed() {

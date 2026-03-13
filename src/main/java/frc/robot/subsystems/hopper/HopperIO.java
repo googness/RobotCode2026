@@ -20,5 +20,21 @@ public interface HopperIO {
 
   public default void stop() {}
 
+  public default void runBelt() {}
+
+  public default void runClearBelt() {}
+
   public default void runIntake() {}
+
+  public default void reverseIntake() {}
+
+  public default void runClearIntake() {}
+
+  public default void stopIntake() {}
+
+  public default void stopBelt() {}
+
+  public default void extendHopper() {}
+
+  public default void retractHopper() {}
 }

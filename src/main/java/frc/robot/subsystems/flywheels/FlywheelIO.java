@@ -37,7 +37,19 @@ public interface FlywheelIO {
 
   default void updateInputs(FlywheelIOInputs inputs) {}
 
-  default void runVelocity(double frontFlywheelMotorRpm, double backFlywheelMotorRpm) {}
+  default void runVelocity() {}
+
+  default void runVelocity(double rps) {}
+
+  default void runAccelerator() {}
+
+  default void stopAccelerator() {}
+
+  default void stopFlywheel() {}
+
+  default void extendHood() {}
+
+  default void retractHood() {}
 
   default void setGains(double kP, double kI, double kD, double kS, double kV, double kA) {}
 }

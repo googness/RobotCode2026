@@ -36,24 +36,18 @@ public final class Constants {
 
   // FIXME: update for various robots
   public enum RobotType {
-    ROBOT_DEFAULT,
     ROBOT_THUNDER,
     ROBOT_SIMBOT,
-    ROBOT_XRP,
-    ROBOT_PRACTICE,
-    ROBOT_COMPETITION,
-    ROBOT_PRACTICE_BOARD,
-    ROBOT_VISION_TEST_PLATFORM,
-    ROBOT_NORTHSTAR_TEST_PLATFORM
   }
 
   // FIXME: update for various robots
   public static RobotType getRobot() {
     if (RobotBase.isReal()) {
-      if (ROBOT == RobotType.ROBOT_SIMBOT
-          || ROBOT == RobotType.ROBOT_XRP) { // Invalid robot selected
+      // if (ROBOT == RobotType.ROBOT_SIMBOT || ROBOT == RobotType.ROBOT_XRP) { // Invalid robot
+      // selected
+      if (ROBOT == RobotType.ROBOT_SIMBOT) {
         invalidRobotAlert.set(true);
-        return RobotType.ROBOT_COMPETITION;
+        return RobotType.ROBOT_THUNDER;
       } else {
         return ROBOT;
       }
@@ -65,10 +59,12 @@ public final class Constants {
   // FIXME: update for various robots
   public static Mode getMode() {
     switch (getRobot()) {
-      case ROBOT_DEFAULT, ROBOT_PRACTICE, ROBOT_PRACTICE_BOARD, ROBOT_COMPETITION:
+        // case ROBOT_DEFAULT, ROBOT_PRACTICE, ROBOT_PRACTICE_BOARD, ROBOT_COMPETITION:
+      case ROBOT_THUNDER:
         return RobotBase.isReal() ? Mode.REAL : Mode.REPLAY;
 
-      case ROBOT_SIMBOT, ROBOT_VISION_TEST_PLATFORM, ROBOT_NORTHSTAR_TEST_PLATFORM, ROBOT_XRP:
+        // case ROBOT_SIMBOT, ROBOT_VISION_TEST_PLATFORM, ROBOT_NORTHSTAR_TEST_PLATFORM, ROBOT_XRP:
+      case ROBOT_SIMBOT:
         return Mode.SIM;
 
       default:

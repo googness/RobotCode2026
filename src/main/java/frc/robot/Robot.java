@@ -15,9 +15,11 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.net.WebServer;
 import edu.wpi.first.wpilibj.Alert;
 import edu.wpi.first.wpilibj.Alert.AlertType;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.IterativeRobotBase;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.Threads;
 import edu.wpi.first.wpilibj.Timer;
@@ -60,6 +62,7 @@ public class Robot extends LoggedRobot {
   private double autoStart;
   private boolean autoMessagePrinted;
   private CANBus canivoreBus;
+  Compressor m_compressor;
 
   private final Timer disabledTimer = new Timer();
   private final Timer canInitialErrorTimer = new Timer();
@@ -85,6 +88,9 @@ public class Robot extends LoggedRobot {
   public Robot() {
     // start code loading LED animation
     LEDs.getInstance();
+
+    m_compressor = new Compressor(2, PneumaticsModuleType.REVPH);
+    m_compressor.enableAnalog(100, 120);
 
     // Record metadata
     Logger.recordMetadata("Robot", Constants.getRobot().toString());

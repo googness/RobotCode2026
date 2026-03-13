@@ -3,10 +3,7 @@ package frc.robot.configs;
 import static edu.wpi.first.units.Units.*;
 
 import com.ctre.phoenix6.CANBus;
-import edu.wpi.first.math.geometry.Rotation3d;
-import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.LinearVelocity;
@@ -22,69 +19,89 @@ import frc.lib.team3061.swerve_drivetrain.swerve.SwerveConstants;
 public class ThunderRobotConfig extends RobotConfig {
 
   // FIXME: update all CAN IDs and steer offsets
-  private static final int FRONT_LEFT_MODULE_DRIVE_MOTOR = 3;
-  private static final int FRONT_LEFT_MODULE_STEER_MOTOR = 5;
-  private static final int FRONT_LEFT_MODULE_STEER_ENCODER = 4;
-  private static final Angle FRONT_LEFT_MODULE_STEER_OFFSET = Rotations.of(-0.22591);
+  // private static final int FRONT_LEFT_MODULE_DRIVE_MOTOR = 7;
+  // private static final int FRONT_LEFT_MODULE_STEER_MOTOR = 8;
+  // private static final int FRONT_LEFT_MODULE_STEER_ENCODER = 9;
+  // private static final Angle FRONT_LEFT_MODULE_STEER_OFFSET = Rotations.of(-0.09619140625);
 
-  private static final int FRONT_RIGHT_MODULE_DRIVE_MOTOR = 6;
-  private static final int FRONT_RIGHT_MODULE_STEER_MOTOR = 8;
-  private static final int FRONT_RIGHT_MODULE_STEER_ENCODER = 7;
-  private static final Angle FRONT_RIGHT_MODULE_STEER_OFFSET = Rotations.of(-0.390381);
+  // private static final int FRONT_RIGHT_MODULE_DRIVE_MOTOR = 10;
+  // private static final int FRONT_RIGHT_MODULE_STEER_MOTOR = 11;
+  // private static final int FRONT_RIGHT_MODULE_STEER_ENCODER = 12;
+  // private static final Angle FRONT_RIGHT_MODULE_STEER_OFFSET = Rotations.of(0.4208984375);
 
-  private static final int BACK_LEFT_MODULE_DRIVE_MOTOR = 12;
-  private static final int BACK_LEFT_MODULE_STEER_MOTOR = 14;
-  private static final int BACK_LEFT_MODULE_STEER_ENCODER = 13;
-  private static final Angle BACK_LEFT_MODULE_STEER_OFFSET = Rotations.of(0.327393);
+  // private static final int BACK_LEFT_MODULE_DRIVE_MOTOR = 13;
+  // private static final int BACK_LEFT_MODULE_STEER_MOTOR = 14;
+  // private static final int BACK_LEFT_MODULE_STEER_ENCODER = 15;
+  // private static final Angle BACK_LEFT_MODULE_STEER_OFFSET = Rotations.of(0.489501953125);
 
-  private static final int BACK_RIGHT_MODULE_DRIVE_MOTOR = 9;
-  private static final int BACK_RIGHT_MODULE_STEER_MOTOR = 11;
-  private static final int BACK_RIGHT_MODULE_STEER_ENCODER = 10;
-  private static final Angle BACK_RIGHT_MODULE_STEER_OFFSET = Rotations.of(-0.336670);
+  // private static final int BACK_RIGHT_MODULE_DRIVE_MOTOR = 16;
+  // private static final int BACK_RIGHT_MODULE_STEER_MOTOR = 17;
+  // private static final int BACK_RIGHT_MODULE_STEER_ENCODER = 18;
+  // private static final Angle BACK_RIGHT_MODULE_STEER_OFFSET = Rotations.of(-0.34033203125);
 
-  private static final int GYRO_ID = 15;
+  private static final int FRONT_LEFT_MODULE_DRIVE_MOTOR = 16;
+  private static final int FRONT_LEFT_MODULE_STEER_MOTOR = 17;
+  private static final int FRONT_LEFT_MODULE_STEER_ENCODER = 18;
+  private static final Angle FRONT_LEFT_MODULE_STEER_OFFSET = Rotations.of(0.159912109375);
+
+  private static final int FRONT_RIGHT_MODULE_DRIVE_MOTOR = 13;
+  private static final int FRONT_RIGHT_MODULE_STEER_MOTOR = 14;
+  private static final int FRONT_RIGHT_MODULE_STEER_ENCODER = 15;
+  private static final Angle FRONT_RIGHT_MODULE_STEER_OFFSET = Rotations.of(-0.008544921875);
+
+  private static final int BACK_LEFT_MODULE_DRIVE_MOTOR = 10;
+  private static final int BACK_LEFT_MODULE_STEER_MOTOR = 11;
+  private static final int BACK_LEFT_MODULE_STEER_ENCODER = 12;
+  private static final Angle BACK_LEFT_MODULE_STEER_OFFSET = Rotations.of(-0.07861328125);
+
+  private static final int BACK_RIGHT_MODULE_DRIVE_MOTOR = 7;
+  private static final int BACK_RIGHT_MODULE_STEER_MOTOR = 8;
+  private static final int BACK_RIGHT_MODULE_STEER_ENCODER = 9;
+  private static final Angle BACK_RIGHT_MODULE_STEER_OFFSET = Rotations.of(0.40380859375);
+
+  private static final int GYRO_ID = 19;
 
   // FIXME: update robot dimensions
   private static final Mass MASS =
       Kilograms.of(
-          51.862); // FIXME: update based on measured mass of robot with battery and bumpers
+          54.4311); // FIXME: update based on measured mass of robot with battery and bumpers
   private static final MomentOfInertia MOI = KilogramSquareMeters.of(6.0); // FIXME: measure
-  private static final Distance TRACKWIDTH = Meters.of(0.523875);
-  private static final Distance WHEELBASE = Meters.of(0.52705);
-  private static final Distance WHEEL_RADIUS = Meters.of(0.09845567409 / 2.0);
+  private static final Distance TRACKWIDTH = Meters.of(0.5588);
+  private static final Distance WHEELBASE = Meters.of(0.5588);
+  private static final Distance WHEEL_RADIUS = Meters.of(0.0508);
   private static final double WHEEL_COEFFICIENT_OF_FRICTION =
       1.2; // FIXME: update based on wheel coefficient of friction
-  private static final Translation2d FRONT_RIGHT_CORNER_POSITION = new Translation2d(0.36, -0.36);
-  private static final Distance ROBOT_WIDTH_WITH_BUMPERS = Meters.of(0.8382);
-  private static final Distance ROBOT_LENGTH_WITH_BUMPERS = Meters.of(0.8382);
+  private static final Translation2d FRONT_RIGHT_CORNER_POSITION =
+      new Translation2d(0.3429, -0.3429);
+  private static final Distance ROBOT_WIDTH_WITH_BUMPERS = Meters.of(0.876);
+  private static final Distance ROBOT_LENGTH_WITH_BUMPERS = Meters.of(0.876);
 
-  private static final double COUPLE_RATIO = 3.125; // FIXME: tune
+  private static final double COUPLE_RATIO = 3.857142857142857; // FIXME: tune
 
   // FIXME: tune PID values for the angle and drive motors for the swerve modules
 
   /* Angle Motor PID Values */
   private static final double ANGLE_KP = 100.0;
   private static final double ANGLE_KI = 0.0;
-  private static final double ANGLE_KD = 0.05;
+  private static final double ANGLE_KD = 0.5;
 
   // FIXME: characterize the drivetrain and update these constants
-  private static final double ANGLE_KS = 0.1891233333;
-  private static final double ANGLE_KV =
-      0.4399866667 * 2 * Math.PI; // convert from V/(radians/s) to V/(rotations/s)
-  private static final double ANGLE_KA = 0.001663333333;
+  private static final double ANGLE_KS = 0.1;
+  private static final double ANGLE_KV = 2.49; // convert from V/(radians/s) to V/(rotations/s)
+  private static final double ANGLE_KA = 0;
 
   /* Drive Motor PID Values */
-  private static final double DRIVE_KP = 8.0;
+  private static final double DRIVE_KP = 0.1;
   private static final double DRIVE_KI = 0.0;
   private static final double DRIVE_KD = 0.0;
 
   // FIXME: characterize the drivetrain and update these constants
-  private static final double DRIVE_KS = 5.0;
-  private static final double DRIVE_KV = 0.0;
+  private static final double DRIVE_KS = 0.16217;
+  private static final double DRIVE_KV = 0.12269;
   private static final double DRIVE_KA = 0.0;
 
   // FIXME: determine maximum velocities empirically
-  private static final LinearVelocity MAX_VELOCITY = MetersPerSecond.of(3.5);
+  private static final LinearVelocity MAX_VELOCITY = MetersPerSecond.of(5.12);
   private static final LinearVelocity MAX_COAST_VELOCITY = MetersPerSecond.of(0.05);
   private static final double SLOW_MODE_MULTIPLIER = 0.75;
 
@@ -94,23 +111,23 @@ public class ThunderRobotConfig extends RobotConfig {
   private static final CANBus CAN_BUS = new CANBus(CAN_BUS_NAME);
 
   // FIXME: specify the name of the camera used for detecting AprilTags
-  private static final String FR_CAMERA_NAME = "OV2311";
-  private static final String FL_CAMERA_NAME = "OV2311";
-  private static final String BR_CAMERA_NAME = "OV2311";
-  private static final String BL_CAMERA_NAME = "OV2311";
+  // private static final String FR_CAMERA_NAME = "OV2311";
+  // private static final String FL_CAMERA_NAME = "OV2311";
+  // private static final String BR_CAMERA_NAME = "OV2311";
+  // private static final String BL_CAMERA_NAME = "OV2311";
 
-  // FIXME: update this with the actual transform from the robot to the camera
-  private static final Transform3d ROBOT_TO_FR_CAMERA =
-      new Transform3d(new Translation3d(0, 0, 0), new Rotation3d(0, 0, 0));
+  // // FIXME: update this with the actual transform from the robot to the camera
+  // private static final Transform3d ROBOT_TO_FR_CAMERA =
+  //     new Transform3d(new Translation3d(0, 0, 0), new Rotation3d(0, 0, 0));
 
-  private static final Transform3d ROBOT_TO_FL_CAMERA =
-      new Transform3d(new Translation3d(0, 0, 0), new Rotation3d(0, 0, 0));
+  // private static final Transform3d ROBOT_TO_FL_CAMERA =
+  //     new Transform3d(new Translation3d(0, 0, 0), new Rotation3d(0, 0, 0));
 
-  private static final Transform3d ROBOT_TO_BR_CAMERA =
-      new Transform3d(new Translation3d(0, 0, 0), new Rotation3d(0, 0, 0));
+  // private static final Transform3d ROBOT_TO_BR_CAMERA =
+  //     new Transform3d(new Translation3d(0, 0, 0), new Rotation3d(0, 0, 0));
 
-  private static final Transform3d ROBOT_TO_BL_CAMERA =
-      new Transform3d(new Translation3d(0, 0, 0), new Rotation3d(0, 0, 0));
+  // private static final Transform3d ROBOT_TO_BL_CAMERA =
+  //     new Transform3d(new Translation3d(0, 0, 0), new Rotation3d(0, 0, 0));
 
   // FIXME: specify the configuration for pneumatics
   public static final int PNEUMATICS_HUB_ID = 2;
@@ -141,17 +158,17 @@ public class ThunderRobotConfig extends RobotConfig {
 
   // FIXME: tune PID values for drive facing angle
   // Drive Facing Angle constants
-  private static final double DRIVE_FACING_ANGLE_KP = 6.0;
-  private static final double DRIVE_FACING_ANGLE_KD = 0.1;
+  private static final double DRIVE_FACING_ANGLE_KP = 6;
+  private static final double DRIVE_FACING_ANGLE_KD = 0.2;
   private static final double DRIVE_FACING_ANGLE_KI = 0.0;
 
   // FIXME: specify the number of LEDs
-  private static final int LED_COUNT = 85;
+  private static final int LED_COUNT = 0;
 
   @Override
   public boolean getPhoenix6Licensed() {
     // FIXME: return true if you have Phoenix 6 Pro license
-    return false;
+    return true;
   }
 
   @Override
@@ -217,7 +234,7 @@ public class ThunderRobotConfig extends RobotConfig {
   @Override
   public SwerveConstants getSwerveConstants() {
     // FIXME: specify the type of swerve module (MK4, MK4i, MK4n are supported)
-    return SwerveConstants.MK4I_L2_CONSTANTS;
+    return SwerveConstants.MK5N_R2_CONSTANTS;
   }
 
   @Override
@@ -365,43 +382,43 @@ public class ThunderRobotConfig extends RobotConfig {
     return CAN_BUS;
   }
 
-  @Override
-  public CameraConfig[] getCameraConfigs() {
-    return new CameraConfig[] {
-      CameraConfig.builder()
-          .robotToCameraTransform(ROBOT_TO_FR_CAMERA)
-          .id(FR_CAMERA_NAME)
-          .location("FR")
-          .width(1600)
-          .height(1200)
-          .stdDevFactor(1.0)
-          .build(),
-      CameraConfig.builder()
-          .robotToCameraTransform(ROBOT_TO_FL_CAMERA)
-          .id(FL_CAMERA_NAME)
-          .location("FL")
-          .width(1600)
-          .height(1200)
-          .stdDevFactor(1.0)
-          .build(),
-      CameraConfig.builder()
-          .robotToCameraTransform(ROBOT_TO_BR_CAMERA)
-          .id(BR_CAMERA_NAME)
-          .location("BR")
-          .width(1600)
-          .height(1200)
-          .stdDevFactor(1.0)
-          .build(),
-      CameraConfig.builder()
-          .robotToCameraTransform(ROBOT_TO_BL_CAMERA)
-          .id(BL_CAMERA_NAME)
-          .location("BL")
-          .width(1600)
-          .height(1200)
-          .stdDevFactor(1.0)
-          .build(),
-    };
-  }
+  // @Override
+  // public CameraConfig[] getCameraConfigs() {
+  //   return new CameraConfig[] {
+  //     CameraConfig.builder()
+  //         .robotToCameraTransform(ROBOT_TO_FR_CAMERA)
+  //         .id(FR_CAMERA_NAME)
+  //         .location("FR")
+  //         .width(1600)
+  //         .height(1200)
+  //         .stdDevFactor(1.0)
+  //         .build(),
+  //     CameraConfig.builder()
+  //         .robotToCameraTransform(ROBOT_TO_FL_CAMERA)
+  //         .id(FL_CAMERA_NAME)
+  //         .location("FL")
+  //         .width(1600)
+  //         .height(1200)
+  //         .stdDevFactor(1.0)
+  //         .build(),
+  //     CameraConfig.builder()
+  //         .robotToCameraTransform(ROBOT_TO_BR_CAMERA)
+  //         .id(BR_CAMERA_NAME)
+  //         .location("BR")
+  //         .width(1600)
+  //         .height(1200)
+  //         .stdDevFactor(1.0)
+  //         .build(),
+  //     CameraConfig.builder()
+  //         .robotToCameraTransform(ROBOT_TO_BL_CAMERA)
+  //         .id(BL_CAMERA_NAME)
+  //         .location("BL")
+  //         .width(1600)
+  //         .height(1200)
+  //         .stdDevFactor(1.0)
+  //         .build(),
+  //   };
+  // }
 
   @Override
   public double getDriveToPoseDriveXKP() {
@@ -496,7 +513,7 @@ public class ThunderRobotConfig extends RobotConfig {
   @Override
   public double getOdometryUpdateFrequency() {
     // FIXME: return 250 Hz if using the DrivetrainIOCTRE class
-    return 50.0;
+    return 250.0;
   }
 
   @Override

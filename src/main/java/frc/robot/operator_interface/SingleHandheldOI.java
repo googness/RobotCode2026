@@ -30,53 +30,110 @@ public class SingleHandheldOI extends OperatorDashboard {
     return -controller.getRightX();
   }
 
-  @Override
-  public Trigger getFieldRelativeButton() {
-    return controller.b();
-  }
+  // @Override
+  // public Trigger getFieldRelativeButton() {
+  //   return controller.b();
+  // }
 
   @Override
   public Trigger getResetGyroButton() {
     return controller.start();
   }
 
+  // @Override
+  // public Trigger getXStanceButton() {
+  //   return controller.y();
+  // }
+
+  // @Override
+  // public Trigger getTranslationSlowModeButton() {
+  //   return controller.leftBumper();
+  // }
+
+  // @Override
+  // public Trigger getRotationSlowModeButton() {
+  //   return controller.rightBumper();
+  // }
+
+  // @Override
+  // public Trigger getLock180Button() {
+  //   return controller.a();
+  // }
+
+  // @Override
+  // public Trigger getSysIdDynamicForward() {
+  //   return controller.back().and(controller.y());
+  // }
+
+  // @Override
+  // public Trigger getSysIdDynamicReverse() {
+  //   return controller.back().and(controller.x());
+  // }
+
+  // @Override
+  // public Trigger getSysIdQuasistaticForward() {
+  //   return controller.start().and(controller.y());
+  // }
+
+  // @Override
+  // public Trigger getSysIdQuasistaticReverse() {
+  //   return controller.start().and(controller.x());
+  // }
+
+  // @Override
+  // public Trigger getHubShot() {
+  //   return controller.a();
+  // }
+
   @Override
-  public Trigger getXStanceButton() {
-    return controller.y();
+  public Trigger runAccelerator() {
+    return controller.rightTrigger();
   }
 
   @Override
-  public Trigger getTranslationSlowModeButton() {
-    return controller.leftBumper();
+  public Trigger extendHopper() {
+    return controller.povRight();
   }
 
   @Override
-  public Trigger getRotationSlowModeButton() {
+  public Trigger retractHopper() {
+    return controller.povLeft();
+  }
+
+  @Override
+  public Trigger runIntake() {
     return controller.rightBumper();
   }
 
   @Override
-  public Trigger getLock180Button() {
+  public Trigger runBelt() {
+    return controller.leftTrigger();
+  }
+
+  @Override
+  public Trigger extendHood() {
+    return controller.povUp();
+  }
+
+  @Override
+  public Trigger retractHood() {
+    return controller.povDown();
+  }
+
+  @Override
+  public Trigger theShooterFix() {
+    return controller.back();
+  }
+
+  public Trigger getRotation() {
+    return controller.y();
+  }
+
+  public Trigger resetVisionPos() {
+    return controller.b();
+  }
+
+  public Trigger dShot() {
     return controller.a();
-  }
-
-  @Override
-  public Trigger getSysIdDynamicForward() {
-    return controller.back().and(controller.y());
-  }
-
-  @Override
-  public Trigger getSysIdDynamicReverse() {
-    return controller.back().and(controller.x());
-  }
-
-  @Override
-  public Trigger getSysIdQuasistaticForward() {
-    return controller.start().and(controller.y());
-  }
-
-  @Override
-  public Trigger getSysIdQuasistaticReverse() {
-    return controller.start().and(controller.x());
   }
 }

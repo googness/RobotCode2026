@@ -1,0 +1,93 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 7.97241084165478,
+        "y": 2.4370756062767476
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 7.9853495007132675,
+        "y": 0.7679885877318111
+      },
+      "isLocked": false,
+      "linkedName": "SimpleShootOneEnd"
+    },
+    {
+      "anchor": {
+        "x": 4.647175463623395,
+        "y": 0.5480313837375184
+      },
+      "prevControl": {
+        "x": 7.815623579509403,
+        "y": 0.6907542718404923
+      },
+      "nextControl": {
+        "x": 1.7747931526390865,
+        "y": 0.41864479315263925
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.24058487874465,
+        "y": 2.8769900142653353
+      },
+      "prevControl": {
+        "x": 1.671283880171183,
+        "y": 1.0397004279600572
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": 0.0
+    },
+    {
+      "waypointRelativePos": 1.1471215351812385,
+      "rotationDegrees": 0.0
+    }
+  ],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 1.1937879810938659,
+      "maxWaypointRelativePos": 2.0,
+      "constraints": {
+        "maxVelocity": 1.75,
+        "maxAcceleration": 6.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 1.5,
+    "maxAcceleration": 6.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 23.198590513648256
+  },
+  "reversed": false,
+  "folder": "NBS_Shoot",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -45.00000000000011
+  },
+  "useDefaultConstraints": false
+}

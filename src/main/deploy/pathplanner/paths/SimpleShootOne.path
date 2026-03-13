@@ -1,0 +1,90 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.6120827389443653,
+        "y": 0.5092154065620549
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 9.732068473609129,
+        "y": 0.6644793152639104
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.97241084165478,
+        "y": 2.4370756062767476
+      },
+      "prevControl": {
+        "x": 8.541711840228247,
+        "y": 1.5572467902995708
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "SimpleShootOneEnd"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.15138592750532834,
+      "rotationDegrees": 0.0
+    },
+    {
+      "waypointRelativePos": 0.5906183368869895,
+      "rotationDegrees": -46.29892884217323
+    }
+  ],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0.3700202565833883,
+      "maxWaypointRelativePos": 0.8075624577987895,
+      "constraints": {
+        "maxVelocity": 1.0,
+        "maxAcceleration": 6.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    },
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0.8318703578663066,
+      "maxWaypointRelativePos": 1.0,
+      "constraints": {
+        "maxVelocity": 1.0,
+        "maxAcceleration": 6.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 1.5,
+    "maxAcceleration": 6.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -45.00000000000011
+  },
+  "reversed": false,
+  "folder": "NBS_Shoot",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": false
+}

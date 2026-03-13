@@ -383,12 +383,33 @@ public class Phoenix6Util {
 
   private static StatusSignalCollection rioSignals = new StatusSignalCollection();
 
+  // /** Registers a set of signals for synchronized refresh. */
+  // public static void registerSignals(boolean canivore, BaseStatusSignal... signals) {
+  //   if (canivore) {
+  //     canivoreSignals.addSignals(signals);
+  //   } else {
+  //     rioSignals.addSignals(signals);
+  //   }
+  // }\
+
+  // INFO: 876 Justin I hacked the fuck outtathis!
   /** Registers a set of signals for synchronized refresh. */
   public static void registerSignals(boolean canivore, BaseStatusSignal... signals) {
-    if (canivore) {
-      canivoreSignals.addSignals(signals);
-    } else {
-      rioSignals.addSignals(signals);
+    for (BaseStatusSignal signal : signals) {
+      if (signal == null) {
+        // We use 'true' here to force the Driver Station to print the stack trace.
+        // This will tell you exactly which subsystem file and line number passed the null signal!
+        edu.wpi.first.wpilibj.DriverStation.reportError(
+            "Attempted to register a NULL Phoenix 6 signal! Check motor initialization (likely Talon FX 7).",
+            true);
+        continue; // Skip adding the null signal to prevent the memory-eating crash
+      }
+
+      if (canivore) {
+        canivoreSignals.addSignals(signal);
+      } else {
+        rioSignals.addSignals(signal);
+      }
     }
   }
 

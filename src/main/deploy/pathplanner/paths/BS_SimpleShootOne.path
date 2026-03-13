@@ -1,0 +1,77 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.534450784593438,
+        "y": 7.625477888730385
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.534450784593439,
+        "y": 7.625477888730385
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.03710413694722,
+        "y": 5.503537803138374
+      },
+      "prevControl": {
+        "x": 8.114736091298147,
+        "y": 7.6384165477888715
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "BSSimpleShootOne"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.43710021321961834,
+      "rotationDegrees": 0.0
+    },
+    {
+      "waypointRelativePos": 0.7697228144989342,
+      "rotationDegrees": 130.9379993303931
+    }
+  ],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0.7076299797434122,
+      "maxWaypointRelativePos": 1.0,
+      "constraints": {
+        "maxVelocity": 1.5,
+        "maxAcceleration": 6.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 6.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 104.82647997035569
+  },
+  "reversed": false,
+  "folder": "BS_Shoot",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": true
+}

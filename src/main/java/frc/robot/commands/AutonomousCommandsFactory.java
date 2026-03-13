@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import static edu.wpi.first.units.Units.*;
 
+import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.path.PathPlannerPath;
 import edu.wpi.first.wpilibj.Alert;
@@ -9,9 +10,16 @@ import edu.wpi.first.wpilibj.Alert.AlertType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.lib.team3061.differential_drivetrain.DifferentialDrivetrain;
 import frc.lib.team3061.swerve_drivetrain.SwerveDrivetrain;
 import frc.lib.team3061.vision.Vision;
+import frc.robot.commands.Auto.AutoAim;
+import frc.robot.commands.Flywheel.FlywheelCmds;
+import frc.robot.commands.Hopper.HopperCmds;
+import frc.robot.subsystems.flywheels.Flywheel;
+import frc.robot.subsystems.hopper.Hopper;
+import frc.robot.subsystems.vision.VisionSystem;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 public class AutonomousCommandsFactory {
@@ -43,9 +51,76 @@ public class AutonomousCommandsFactory {
     return autoChooser.get();
   }
 
-  public void configureAutoCommands(SwerveDrivetrain drivetrain, Vision vision) {
+  public void configureAutoCommands(
+      SwerveDrivetrain drivetrain,
+      Vision vision,
+      Hopper hopper,
+      Flywheel flywheel,
+      VisionSystem jaysVision) {
+    NamedCommands.registerCommand(
+        "Intake",
+        HopperCmds.runIntake(hopper)
+            .andThen(new WaitCommand(2.0))
+            .andThen(HopperCmds.stopIntake(hopper)));
+
+    // Extend Hopper
+    NamedCommands.registerCommand("ExtendHopper", HopperCmds.extendHopper(hopper));
+
+    // Retract Hopper
+    NamedCommands.registerCommand("RetractHopper", HopperCmds.retractHopper(hopper));
+
+    // FixedShot
+    NamedCommands.registerCommand(
+        "FixedShot",
+        FlywheelCmds.getFixedShot(flywheel).alongWith(FlywheelCmds.extendHood(flywheel)));
+
+    NamedCommands.registerCommand("RunFeeder", FlywheelCmds.runAccelerator(flywheel));
+
+    NamedCommands.registerCommand("RunBelt", HopperCmds.runBelt(hopper));
+
+    NamedCommands.registerCommand("StopBelt", HopperCmds.stopBelt(hopper));
+
+    NamedCommands.registerCommand("StopFeeder", FlywheelCmds.stopAccelerator(flywheel));
+
+    NamedCommands.registerCommand("RetractHood", FlywheelCmds.retractHood(flywheel));
+    NamedCommands.registerCommand(
+        "StopFlywheel", new InstantCommand(() -> flywheel.stopFlywheel()));
+
+    // Auto Intake
+    NamedCommands.registerCommand(
+        "AutoIntake",
+        HopperCmds.extendHopper(hopper)
+            .alongWith(
+                HopperCmds.runIntake(hopper)
+                    .andThen(new WaitCommand(3))
+                    .andThen(HopperCmds.stopIntake(hopper))));
+
+    // Shoot
+    NamedCommands.registerCommand(
+        "AutoShoot",
+        FlywheelCmds.extendHood(flywheel)
+            .andThen(
+                new AutoAim(drivetrain, jaysVision, flywheel)
+                    .alongWith(hopper.RunClearBeltCmd())
+                    .alongWith(
+                        new WaitCommand(1)
+                            .andThen(
+                                new WaitCommand(1)
+                                    .andThen(
+                                        flywheel.FeederRpsCmd()
+                                            .alongWith(
+                                                hopper.RunBeltCmd()
+                                                    .alongWith(
+                                                        new WaitCommand(2.5)
+                                                            .andThen(() -> hopper.retractHopper())
+                                                            .andThen(
+                                                                hopper.RunClearIntakeCmd()))))))));
+
+    // AutoAim
+    NamedCommands.registerCommand("AutoAim", new AutoAim(drivetrain, jaysVision, flywheel));
+
     // add commands to the auto chooser
-    autoChooser.addDefaultOption("Do Nothing", new InstantCommand());
+    // autoChooser.addDefaultOption("Do Nothing", new InstantCommand());
 
     /************ Start Point ************
      *
@@ -93,6 +168,24 @@ public class AutonomousCommandsFactory {
         "Oval Test Slow", createTuningAutoPath("OvalTestSlow", false, drivetrain));
     autoChooser.addOption(
         "Oval Test Fast", createTuningAutoPath("OvalTestFast", false, drivetrain));
+
+    Command Jay = new PathPlannerAuto("Jay");
+    autoChooser.addOption("Jay", Jay);
+
+    // BALL SIDE
+    Command BS_SimpleShoot = new PathPlannerAuto("BS_SimpleShoot");
+    autoChooser.addOption("BS_SimpleShoot", BS_SimpleShoot);
+
+    // NON BALL SIDE
+    Command NBS_SimpleShoot = new PathPlannerAuto("NBS_SimpleShoot");
+    autoChooser.addOption("NBS_SimpleShoot", NBS_SimpleShoot);
+
+    Command NBS_ParkInTrench = new PathPlannerAuto("NBS_ParkInTrench");
+    autoChooser.addOption("NBS_ParkInTrench", NBS_ParkInTrench);
+
+    // Center
+    Command CenterShoot = new PathPlannerAuto("CenterShoot");
+    autoChooser.addDefaultOption("CenterShoot", CenterShoot);
 
     /************ Drive Velocity Tuning ************
      *

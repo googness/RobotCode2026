@@ -1,0 +1,87 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "CenterShoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "FixedShot"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 4.0
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "RunBelt"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "RunFeeder"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 3.0
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "StopFeeder"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "StopBelt"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "RetractHood"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "StopFlywheel"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Center",
+  "choreoAuto": false
+}
