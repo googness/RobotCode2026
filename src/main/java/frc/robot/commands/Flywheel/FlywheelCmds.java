@@ -9,6 +9,8 @@ public class FlywheelCmds {
 
   private FlywheelCmds() {}
 
+  // Default Commands
+
   // public static Command getHubShot(Flywheel flywheel) {
   //   return new InstantCommand(() -> flywheel.setVelocity(0.5, 0.5), flywheel);
   // }
@@ -19,6 +21,10 @@ public class FlywheelCmds {
 
   public static Command getFixedShot(Flywheel flywheel) {
     return new InstantCommand(() -> flywheel.setVelocity(39));
+  }
+
+  public static Command depotShot(Flywheel flywheel) {
+    return new InstantCommand(() -> flywheel.setVelocity(40));
   }
 
   // public static Command getFixedShot(Flywheel flywheel) {
@@ -35,11 +41,6 @@ public class FlywheelCmds {
     return new InstantCommand(() -> flywheel.stopAccelerator());
   }
 
-  public static Command extendHood(Flywheel flywheel) {
-    return new InstantCommand(() -> flywheel.extendHood());
-  }
+  // New Commands for St. Cloud
 
-  public static Command retractHood(Flywheel flywheel) {
-    return new InstantCommand(() -> flywheel.retractHood());
-  }
 }

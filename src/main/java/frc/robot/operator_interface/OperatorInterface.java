@@ -122,6 +122,11 @@ public interface OperatorInterface {
 
   // Jays Commands \\
 
+  // Shooting Commands
+  public default Trigger runAccelerator() {
+    return new Trigger(() -> false);
+  }
+
   public default Trigger theShooterFix() {
     return new Trigger(() -> false);
   }
@@ -130,43 +135,20 @@ public interface OperatorInterface {
     return new Trigger(() -> false);
   }
 
-  public default Trigger extendHoodAngle() {
-    return new Trigger(() -> false);
-  }
-
   public default Trigger dShot() {
     return new Trigger(() -> false);
   }
 
-  public default Trigger retractHoodAngle() {
+  public default Trigger jayShot() {
     return new Trigger(() -> false);
   }
 
-  public default Trigger extendHopper() {
+  public default Trigger lockOn() {
     return new Trigger(() -> false);
   }
 
-  public default Trigger retractHopper() {
-    return new Trigger(() -> false);
-  }
-
-  public default Trigger runAccelerator() {
-    return new Trigger(() -> false);
-  }
-
-  public default Trigger runIntake() {
-    return new Trigger(() -> false);
-  }
-
-  public default Trigger runBelt() {
-    return new Trigger(() -> false);
-  }
-
-  public default Trigger extendHood() {
-    return new Trigger(() -> false);
-  }
-
-  public default Trigger retractHood() {
+  // Vision Commands
+  public default Trigger resetVisionPos() {
     return new Trigger(() -> false);
   }
 
@@ -174,13 +156,34 @@ public interface OperatorInterface {
     return new Trigger(() -> false);
   }
 
-  public default Trigger resetVisionPos() {
-    return new Trigger(() -> false);
-  }
-
+  // Intake Commands
   public default Trigger reverseIntake() {
     return new Trigger(() -> false);
   }
 
-  // Jays Commands \\
+  public default Trigger runIntake() {
+    return new Trigger(() -> false);
+  }
+
+  // Hopper Commands
+  public default Trigger HopperToIntakePos() {
+    return new Trigger(() -> false);
+  }
+
+  public default Trigger HopperToHomePos() {
+    return new Trigger(() -> false);
+  }
+
+  public default Trigger runBelt() {
+    return new Trigger(() -> false);
+  }
+
+  // Developer Commands
+  public default Trigger DriveToShoot() {
+    return new Trigger(() -> false);
+  }
+
+  public default Trigger RotateToTag() {
+    return new Trigger(() -> false);
+  }
 }

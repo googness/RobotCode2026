@@ -1,13 +1,15 @@
 package frc.robot.commands.Vision;
 
-import static edu.wpi.first.units.Units.*;
-
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.vision.LimelightHelpers;
 import frc.robot.subsystems.vision.VisionSystem;
 
 public class ResetPosetoVision extends Command {
 
   private VisionSystem vision;
+
+  private LimelightHelpers.PoseEstimate mt2 =
+      LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight-thunder");
 
   public ResetPosetoVision(VisionSystem vision) {
 
@@ -17,9 +19,7 @@ public class ResetPosetoVision extends Command {
   @Override
   public void initialize() {
 
-    // This runs once when you pull the trigger.
-    // If you want the Limelight Failsafe, call your reset method here!
-
-    this.vision.resetOdometryToVisionPose();
+    // Reset vision pose
+    this.vision.resetOdometryToVisionPose(mt2);
   }
 }

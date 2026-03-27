@@ -85,55 +85,99 @@ public class SingleHandheldOI extends OperatorDashboard {
   //   return controller.a();
   // }
 
-  @Override
-  public Trigger runAccelerator() {
+  // @Override
+  // public Trigger runAccelerator() {
+  //   return controller.rightTrigger();
+  // }
+
+  // @Override
+  // public Trigger extendHopper() {
+  //   return controller.povRight();
+  // }
+
+  // @Override
+  // public Trigger retractHopper() {
+  //   return controller.povLeft();
+  // }
+
+  // @Override
+  // public Trigger runIntake() {
+  //   return controller.rightBumper();
+  // }
+
+  // // @Override
+  // // public Trigger runBelt() {
+  // //   return controller.leftTrigger();
+  // // }
+
+  // @Override
+  // public Trigger extendHood() {
+  //   return controller.povUp();
+  // }
+
+  // @Override
+  // public Trigger retractHood() {
+  //   return controller.povDown();
+  // }
+
+  // @Override
+  // public Trigger theShooterFix() {
+  //   return controller.back();
+  // }
+
+  // public Trigger getRotation() {
+  //   return controller.y();
+  // }
+
+  // public Trigger resetVisionPos() {
+  //   return controller.b();
+  // }
+
+  // public Trigger dShot() {
+  //   return controller.a();
+  // }
+
+  // // Operator buttons
+  // public Trigger DriveToShoot() {
+  //   return controller.leftTrigger();
+  // }
+
+  // public Trigger RotateToTag() {
+  //   return controller.x();
+  // }
+
+  // Shooter Buttons
+  public Trigger jayShot() {
     return controller.rightTrigger();
   }
 
-  @Override
-  public Trigger extendHopper() {
-    return controller.povRight();
+  public Trigger lockOn() {
+    return controller.leftTrigger();
   }
 
-  @Override
-  public Trigger retractHopper() {
-    return controller.povLeft();
-  }
-
-  @Override
+  // Intake Buttons
   public Trigger runIntake() {
     return controller.rightBumper();
   }
 
-  @Override
-  public Trigger runBelt() {
-    return controller.leftTrigger();
-  }
-
-  @Override
-  public Trigger extendHood() {
-    return controller.povUp();
-  }
-
-  @Override
-  public Trigger retractHood() {
-    return controller.povDown();
-  }
-
-  @Override
-  public Trigger theShooterFix() {
-    return controller.back();
-  }
-
-  public Trigger getRotation() {
-    return controller.y();
-  }
-
-  public Trigger resetVisionPos() {
+  // Hopper Buttons
+  public Trigger HopperToIntakePos() {
     return controller.b();
   }
 
-  public Trigger dShot() {
+  public Trigger HopperToHomePos() {
     return controller.a();
   }
+
+
+
+  // Drivetrain Buttons
+  public Trigger DriveToShoot() {
+    return controller.povDown();
+  }
+
+  public Trigger RotateToTag() {
+    return controller.povUp();
+  }
+
 }

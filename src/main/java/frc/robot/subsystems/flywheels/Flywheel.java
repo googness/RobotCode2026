@@ -56,9 +56,9 @@ public class Flywheel extends SubsystemBase {
     distanceToRpsMap.put(65.0, 45.5);
     distanceToRpsMap.put(70.0, 46.5);
     distanceToRpsMap.put(75.0, 47.0);
-    distanceToRpsMap.put(80.0, 47.5);
-    distanceToRpsMap.put(85.0, 48.5);
-    distanceToRpsMap.put(90.0, 49.0);
+    // distanceToRpsMap.put(80.0, 47.5);
+    // distanceToRpsMap.put(85.0, 48.5);
+    // distanceToRpsMap.put(90.0, 49.0);
   }
 
   @Override

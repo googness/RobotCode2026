@@ -14,9 +14,18 @@ public interface HopperIO {
     public double intakeMotorSupplyCurrentAmps = 0.0;
     public double intakeMotorTorqueCurretAmps = 0.0;
     public double intakeMotorTempCelsius = 0.0;
+    public double hopperPositon = 0.0;
   }
 
   public default void updateInputs(HopperIOInputs inputs) {}
+
+  default void setHopperPosition(double position) {}
+
+  default void setHopperSpeed(double speed) {}
+
+  default void stopHopper() {}
+
+  default void manualHopperControl() {}
 
   public default void stop() {}
 
@@ -33,8 +42,4 @@ public interface HopperIO {
   public default void stopIntake() {}
 
   public default void stopBelt() {}
-
-  public default void extendHopper() {}
-
-  public default void retractHopper() {}
 }

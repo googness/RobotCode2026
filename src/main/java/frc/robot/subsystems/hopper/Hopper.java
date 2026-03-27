@@ -4,12 +4,15 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import org.littletonrobotics.junction.Logger;
 
 public class Hopper extends SubsystemBase {
 
   private final HopperIO io;
 
   private final HopperIOInputsAutoLogged HopperInputs = new HopperIOInputsAutoLogged();
+
+  private double mHopperMotorSetpoint = 0;
 
   public Hopper(HopperIO io) {
     this.io = io;
@@ -19,6 +22,38 @@ public class Hopper extends SubsystemBase {
   public void periodic() {
     // the first step in periodic is to update the inputs from the IO implementation.
     io.updateInputs(HopperInputs);
+
+    Logger.processInputs(HopperConstants.SUBSYSTEM_NAME, HopperInputs);
+  }
+
+  public void GoToIntakePOS() {
+    setHopperPosition(HopperConstants.HOPPER_INTAKE_POSITION);
+  }
+
+  public void GoToHomePOS() {
+    setHopperPosition(HopperConstants.HOPPER_HOME_POSITION);
+  }
+
+  private void setHopperPosition(double pos) {
+    mHopperMotorSetpoint = pos;
+    io.setHopperPosition(mHopperMotorSetpoint);
+  }
+
+  // public void setHopperSpeed(double speed) {
+  //   // setState(State.MANUAL);
+  //   if (speed != 0) {
+  //     io.setHopperSpeed(speed);
+  //   } else {
+  //     io.stopHopper();
+  //   }
+  // }
+
+  public void setHopperSpeed(double speed) {
+    io.setHopperSpeed(speed);
+  }
+
+  public double getCurrentElevatorPos() {
+    return HopperInputs.hopperPositon;
   }
 
   // set the speed of the intake
@@ -41,16 +76,6 @@ public class Hopper extends SubsystemBase {
 
   public void stopBelt() {
     io.stopBelt();
-  }
-
-  // extend the hopper
-  public void extendHopper() {
-    io.extendHopper();
-  }
-
-  // retract the hopper
-  public void retractHopper() {
-    io.retractHopper();
   }
 
   public Command RunIntakeCmd() {
@@ -81,7 +106,7 @@ public class Hopper extends SubsystemBase {
               // runIntake(rps);
               io.runClearIntake();
             })
-        .andThen(new WaitCommand(2.5).andThen(() -> stopIntake()))
+        .andThen(new WaitCommand(4).andThen(() -> stopIntake()))
         .handleInterrupt(() -> stopIntake());
   }
 }

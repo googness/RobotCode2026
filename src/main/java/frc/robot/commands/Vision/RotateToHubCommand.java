@@ -17,6 +17,7 @@ import frc.lib.team3061.swerve_drivetrain.*;
 import frc.robot.subsystems.flywheels.Flywheel;
 import frc.robot.subsystems.vision.VisionSystem;
 import java.util.function.DoubleSupplier;
+import org.littletonrobotics.junction.Logger;
 
 public class RotateToHubCommand extends Command {
 
@@ -70,8 +71,6 @@ public class RotateToHubCommand extends Command {
     // Setting up a tolerance so the robot rotates until its within this range
     this.thetaController.setTolerance(0.05, 0.05);
 
-    SmartDashboard.setDefaultNumber("Aim Offset Degrees", 0.0);
-
     addRequirements(drivetrain);
   }
 
@@ -119,8 +118,9 @@ public class RotateToHubCommand extends Command {
     // Calculate the exact compass angle to the Hub
     Rotation2d targetAngle = targetHub.minus(currentPose.getTranslation()).getAngle();
 
-    double tuningOffsetDegrees = -4;
-    targetAngle = targetAngle.plus(Rotation2d.fromDegrees(tuningOffsetDegrees));
+    // double tuningOffsetDegrees = -4;
+    // double tuningOffsetDegrees = aimOffset.get();
+    // targetAngle = targetAngle.plus(Rotation2d.fromDegrees(tuningOffsetDegrees));
 
     // Run the PID math to get the spin speed
     double omegaRadiansPerSecond =
@@ -137,6 +137,11 @@ public class RotateToHubCommand extends Command {
     double rps = 36;
 
     distanceInches = distanceInches;
+
+    // Jay Odometry code
+    double odometryDistMeters = vision.getOdometryDist(targetHub.getX(), targetHub.getY());
+    double odometryDistInch = Units.metersToInches(odometryDistMeters);
+    Logger.recordOutput("RotateToHub/OdometryDistanceInches", odometryDistInch);
 
     double useThis = flywheel.getTargetRps(distanceInches);
 

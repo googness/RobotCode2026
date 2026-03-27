@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.03710413694722,
-        "y": 5.503537803138374
+        "x": 8.27,
+        "y": 5.545388888888888
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.933594864479314,
-        "y": 7.573723252496434
+        "x": 7.090922222222223,
+        "y": 6.782933333333333
       },
       "isLocked": false,
       "linkedName": "BSSimpleShootOne"
@@ -20,24 +20,24 @@
         "y": 7.392582025677603
       },
       "prevControl": {
-        "x": 6.62679029957204,
-        "y": 7.392582025677603
+        "x": 6.626335627263124,
+        "y": 7.369833749433651
       },
       "nextControl": {
-        "x": 4.517299673730401,
-        "y": 7.392582025677603
+        "x": 4.4891555555555565,
+        "y": 7.455299999999999
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.2535235378031384,
-        "y": 6.072838801711842
+        "x": 2.257677777777778,
+        "y": 5.184844444444443
       },
       "prevControl": {
-        "x": 1.2572467902995719,
-        "y": 7.573723252496434
+        "x": 0.581633333333333,
+        "y": 7.533255555555556
       },
       "nextControl": null,
       "isLocked": false,
@@ -47,6 +47,10 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 1.0746268656716458,
+      "rotationDegrees": 0.0
+    },
+    {
+      "waypointRelativePos": 1.4390041493775914,
       "rotationDegrees": 0.0
     },
     {
@@ -73,7 +77,7 @@
       "minWaypointRelativePos": 0.0,
       "maxWaypointRelativePos": 0.8480756245779811,
       "constraints": {
-        "maxVelocity": 2.0,
+        "maxVelocity": 1.5,
         "maxAcceleration": 6.0,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0,
@@ -85,7 +89,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
+    "maxVelocity": 2.0,
     "maxAcceleration": 6.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
@@ -94,13 +98,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -38.88449643371468
+    "rotation": -27.07208023799271
   },
   "reversed": false,
   "folder": "BS_Shoot",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 104.82647997035569
+    "rotation": 132.08916217383202
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.97241084165478,
-        "y": 2.4370756062767476
+        "x": 7.610128388017117,
+        "y": 3.782696148359487
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.9853495007132675,
-        "y": 0.7679885877318111
+        "x": 7.493680456490724,
+        "y": 1.69957203994294
       },
       "isLocked": false,
       "linkedName": "SimpleShootOneEnd"
@@ -32,12 +32,12 @@
     },
     {
       "anchor": {
-        "x": 2.24058487874465,
-        "y": 2.8769900142653353
+        "x": 2.9651497860199716,
+        "y": 2.6182168330955777
       },
       "prevControl": {
-        "x": 1.671283880171183,
-        "y": 1.0397004279600572
+        "x": 2.3958487874465044,
+        "y": 0.7809272467902997
       },
       "nextControl": null,
       "isLocked": false,
@@ -57,6 +57,19 @@
   "constraintZones": [
     {
       "name": "Constraints Zone",
+      "minWaypointRelativePos": 0.0,
+      "maxWaypointRelativePos": 0.6482106684672508,
+      "constraints": {
+        "maxVelocity": 2.0,
+        "maxAcceleration": 6.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    },
+    {
+      "name": "Constraints Zone",
       "minWaypointRelativePos": 1.1937879810938659,
       "maxWaypointRelativePos": 2.0,
       "constraints": {
@@ -72,7 +85,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.5,
+    "maxVelocity": 3.0,
     "maxAcceleration": 6.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
@@ -81,13 +94,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 23.198590513648256
+    "rotation": 39.45700791249594
   },
   "reversed": false,
   "folder": "NBS_Shoot",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -45.00000000000011
+    "rotation": -74.93151184050778
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

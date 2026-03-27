@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 0.8949643366619111,
+        "y": 7.237318116975749
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 0.8820256776034237,
+        "y": 5.154194008559203
+      },
+      "isLocked": false,
+      "linkedName": "BS_DepotIntakeOne"
+    },
+    {
+      "anchor": {
+        "x": 0.8949643366619111,
+        "y": 4.895420827389444
+      },
+      "prevControl": {
+        "x": 0.9079029957203992,
+        "y": 7.237318116975749
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "BS_DepotIntakeTwo"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 0.5,
+    "maxAcceleration": 6.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "reversed": false,
+  "folder": "BS_Shoot",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.007422551328725695
+  },
+  "useDefaultConstraints": false
+}

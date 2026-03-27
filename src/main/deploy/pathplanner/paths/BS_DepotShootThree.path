@@ -3,45 +3,36 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.420944444444444,
-        "y": 7.601466666666667
+        "x": 0.5197432239657629,
+        "y": 5.956390870185448
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.420944444444445,
-        "y": 7.601466666666667
+        "x": 2.2542543350768733,
+        "y": 5.059901981296559
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "BS_DepotShootTwo"
     },
     {
       "anchor": {
-        "x": 8.27,
-        "y": 5.545388888888888
+        "x": 2.719315263908701,
+        "y": 3.64037089871612
       },
       "prevControl": {
-        "x": 7.207855555555556,
-        "y": 6.948588888888889
+        "x": 1.8966479315263904,
+        "y": 4.367929117134252
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "BSSimpleShootOne"
+      "linkedName": "BS_DepotShootThree"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.43710021321961834,
-      "rotationDegrees": 0.0
-    },
-    {
-      "waypointRelativePos": 0.6199170124481329,
-      "rotationDegrees": 140.22799244952074
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.5171215880893333,
+      "minWaypointRelativePos": 0.41323430114786186,
       "maxWaypointRelativePos": 1.0,
       "constraints": {
         "maxVelocity": 1.5,
@@ -65,7 +56,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 132.08916217383202
+    "rotation": -0.3370301098578083
   },
   "reversed": false,
   "folder": "BS_Shoot",

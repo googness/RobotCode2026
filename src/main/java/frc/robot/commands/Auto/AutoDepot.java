@@ -7,7 +7,6 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -16,7 +15,7 @@ import frc.lib.team3061.swerve_drivetrain.*;
 import frc.robot.subsystems.flywheels.Flywheel;
 import frc.robot.subsystems.vision.VisionSystem;
 
-public class AutoAim extends Command {
+public class AutoDepot extends Command {
 
   // Import drivetrain
   private final SwerveDrivetrain drivetrain;
@@ -26,6 +25,8 @@ public class AutoAim extends Command {
 
   private final Flywheel flywheels;
 
+  private double mRps = 0;
+
   // The PID controller built directly inside the command
   private final ProfiledPIDController thetaController;
 
@@ -34,8 +35,9 @@ public class AutoAim extends Command {
   private final Translation2d blueHubLocation = new Translation2d(4.634, 4.029); // 4.634, 4.016
 
   // Constructor
-  public AutoAim(SwerveDrivetrain drivetrain, VisionSystem vision, Flywheel flywheel) {
-
+  public AutoDepot(
+      double rps, SwerveDrivetrain drivetrain, VisionSystem vision, Flywheel flywheel) {
+    this.mRps = rps;
     this.drivetrain = drivetrain;
     this.vision = vision;
     this.flywheels = flywheel;
@@ -98,7 +100,7 @@ public class AutoAim extends Command {
     // If it aims too far left, add a negative degree offset to pull it right.
     // (You will need to tune this number on the carpet!)
 
-    double tuningOffsetDegrees = -3.0;
+    // double tuningOffsetDegrees = -3.0;
 
     // Run the PID math to get the spin speed
     double omegaRadiansPerSecond =
@@ -109,11 +111,11 @@ public class AutoAim extends Command {
       omegaRadiansPerSecond = 0.0;
     }
 
-    double distanceMeters = currentPose.getTranslation().getDistance(targetHub);
-    double distanceInches = Units.metersToInches(distanceMeters);
+    // double distanceMeters = currentPose.getTranslation().getDistance(targetHub);
+    // double distanceInches = Units.metersToInches(distanceMeters);
 
     // double useThis = flywheels.getTargetRps(distanceInches);
-    double useThis = flywheels.getTargetRps(distanceInches);
+    // double useThis = flywheels.getTargetRps(distanceInches);
     // Notice how we wrap everything in MetersPerSecond and RadiansPerSecond for your template
     drivetrain.drive(
         MetersPerSecond.of(xVelocity),
@@ -123,7 +125,7 @@ public class AutoAim extends Command {
         true // open loop
         );
 
-    flywheels.setVelocity(useThis);
+    flywheels.setVelocity(mRps);
   }
 
   @Override

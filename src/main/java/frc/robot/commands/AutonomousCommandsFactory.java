@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
-import static edu.wpi.first.units.Units.*;
+import static edu.wpi.first.units.Units.MetersPerSecond;
+import static edu.wpi.first.units.Units.RadiansPerSecond;
 
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
@@ -64,15 +65,27 @@ public class AutonomousCommandsFactory {
             .andThen(HopperCmds.stopIntake(hopper)));
 
     // Extend Hopper
-    NamedCommands.registerCommand("ExtendHopper", HopperCmds.extendHopper(hopper));
+    // NamedCommands.registerCommand("ExtendHopper", HopperCmds.extendHopper(hopper));
 
-    // Retract Hopper
-    NamedCommands.registerCommand("RetractHopper", HopperCmds.retractHopper(hopper));
+    // // Retract Hopper
+    // NamedCommands.registerCommand("RetractHopper", HopperCmds.retractHopper(hopper));
 
     // FixedShot
-    NamedCommands.registerCommand(
-        "FixedShot",
-        FlywheelCmds.getFixedShot(flywheel).alongWith(FlywheelCmds.extendHood(flywheel)));
+    // NamedCommands.registerCommand(
+    //     "FixedShot",
+    //     FlywheelCmds.extendHood(flywheel)
+    //         .andThen(
+    //             FlywheelCmds.getFixedShot(flywheel)
+    //                 .andThen(
+    //                     new WaitCommand(1)
+    //                         .andThen(
+    //                             flywheel.FeederRpsCmd()
+    //                                 .alongWith(
+    //                                     hopper.RunBeltCmd()
+    //                                         .alongWith(
+    //                                             new WaitCommand(2.5)
+    //                                                 .andThen(() -> hopper.retractHopper())
+    //                                                 .andThen(hopper.RunClearIntakeCmd())))))));
 
     NamedCommands.registerCommand("RunFeeder", FlywheelCmds.runAccelerator(flywheel));
 
@@ -82,39 +95,105 @@ public class AutonomousCommandsFactory {
 
     NamedCommands.registerCommand("StopFeeder", FlywheelCmds.stopAccelerator(flywheel));
 
-    NamedCommands.registerCommand("RetractHood", FlywheelCmds.retractHood(flywheel));
     NamedCommands.registerCommand(
         "StopFlywheel", new InstantCommand(() -> flywheel.stopFlywheel()));
 
-    // Auto Intake
-    NamedCommands.registerCommand(
-        "AutoIntake",
-        HopperCmds.extendHopper(hopper)
-            .alongWith(
-                HopperCmds.runIntake(hopper)
-                    .andThen(new WaitCommand(3))
-                    .andThen(HopperCmds.stopIntake(hopper))));
+    // New Auto Commands for St. Cloud \\
 
-    // Shoot
+    // Intake Commands for autonomous
+    NamedCommands.registerCommand("AutoIntake", HopperCmds.autonomousIntake(hopper));
+
+    NamedCommands.registerCommand("ReturnHopper", HopperCmds.GoToHomePos(hopper));
+
+    // Shoot Commands for autonomous
     NamedCommands.registerCommand(
         "AutoShoot",
-        FlywheelCmds.extendHood(flywheel)
-            .andThen(
-                new AutoAim(drivetrain, jaysVision, flywheel)
-                    .alongWith(hopper.RunClearBeltCmd())
+        new AutoAim(drivetrain, jaysVision, flywheel)
+            .alongWith(
+                FlywheelCmds.runAccelerator(flywheel)
+                    .alongWith(HopperCmds.runBelt(hopper))
                     .alongWith(
-                        new WaitCommand(1)
+                        new WaitCommand(1.5)
                             .andThen(
-                                new WaitCommand(1)
-                                    .andThen(
-                                        flywheel.FeederRpsCmd()
-                                            .alongWith(
-                                                hopper.RunBeltCmd()
-                                                    .alongWith(
-                                                        new WaitCommand(2.5)
-                                                            .andThen(() -> hopper.retractHopper())
-                                                            .andThen(
-                                                                hopper.RunClearIntakeCmd()))))))));
+                                HopperCmds.GoToIntakePos(hopper)
+                                    .alongWith(hopper.RunClearIntakeCmd())
+                                    .withTimeout(3)))));
+
+    // Auto Intake
+    // NamedCommands.registerCommand(
+    //     "AutoIntake",
+    //     HopperCmds.extendHopper(hopper)
+    //         .alongWith(
+    //             HopperCmds.runIntake(hopper)
+    //                 .alongWith(HopperCmds.runBelt(hopper))
+    //                 .andThen(new WaitCommand(8))
+    //                 .andThen(HopperCmds.stopIntake(hopper))));
+
+    // Shoot
+    // NamedCommands.registerCommand(
+    //     "AutoShoot",
+    //     FlywheelCmds.extendHood(flywheel)
+    //         .andThen(
+    //             new AutoAim(drivetrain, jaysVision, flywheel)
+    //                 // .alongWith(hopper.RunClearBeltCmd())
+    //                 .alongWith(
+    //                     new WaitCommand(1)
+    //                         .andThen(
+    //                             new WaitCommand(1)
+    //                                 .andThen(
+    //                                     flywheel.FeederRpsCmd()
+    //                                         .alongWith(
+    //                                             hopper.RunBeltCmd()
+    //                                                 .alongWith(
+    //                                                     new WaitCommand(2.5)
+    //                                                         .andThen(() ->
+    // hopper.retractHopper())
+    //                                                         .andThen(
+    //
+    // hopper.RunClearIntakeCmd()))))))));
+    // NamedCommands.registerCommand(
+    //     "depotShot",
+    //     FlywheelCmds.extendHood(flywheel)
+    //         .andThen(
+    //             new AutoDepot(40, drivetrain, jaysVision, flywheel)
+    //                 .alongWith(hopper.RunClearBeltCmd())
+    //                 .alongWith(
+    //                     new WaitCommand(1)
+    //                         .andThen(
+    //                             new WaitCommand(1)
+    //                                 .andThen(
+    //                                     flywheel.FeederRpsCmd()
+    //                                         .alongWith(
+    //                                             hopper.RunBeltCmd()
+    //                                                 .alongWith(
+    //                                                     new WaitCommand(2.5)
+    //                                                         .andThen(() ->
+    // hopper.retractHopper())
+    //                                                         .andThen(
+    //
+    // hopper.RunClearIntakeCmd()))))))));
+
+    // NamedCommands.registerCommand(
+    //     "JersieDepotShot",
+    //     FlywheelCmds.extendHood(flywheel)
+    //         .andThen(
+    //             new AutoDepot(43, drivetrain, jaysVision, flywheel)
+    //                 // .alongWith(hopper.RunClearBeltCmd())
+    //                 .alongWith(
+    //                     new WaitCommand(1)
+    //                         .andThen(
+    //                             new WaitCommand(1)
+    //                                 .andThen(
+    //                                     flywheel.FeederRpsCmd()
+    //                                         .alongWith(
+    //                                             hopper.RunBeltCmd()
+    //                                                 .alongWith(
+    //                                                     new WaitCommand(2.5)
+    //                                                         .andThen(() ->
+    // hopper.retractHopper())
+    //                                                         .andThen(
+    //
+    // hopper.RunClearIntakeCmd()))))))));
 
     // AutoAim
     NamedCommands.registerCommand("AutoAim", new AutoAim(drivetrain, jaysVision, flywheel));
@@ -179,6 +258,9 @@ public class AutonomousCommandsFactory {
     // NON BALL SIDE
     Command NBS_SimpleShoot = new PathPlannerAuto("NBS_SimpleShoot");
     autoChooser.addOption("NBS_SimpleShoot", NBS_SimpleShoot);
+
+    Command BS_DepotShoot = new PathPlannerAuto("BS_DepotShoot");
+    autoChooser.addOption("BS_DepotShoot", BS_DepotShoot);
 
     Command NBS_ParkInTrench = new PathPlannerAuto("NBS_ParkInTrench");
     autoChooser.addOption("NBS_ParkInTrench", NBS_ParkInTrench);
