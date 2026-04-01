@@ -1,0 +1,93 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 4.635322222222222,
+        "y": 7.630699999999999
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 7.032455555555556,
+        "y": 7.094755555555555
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.221277777777779,
+        "y": 7.2799000000000005
+      },
+      "prevControl": {
+        "x": 8.221277777777779,
+        "y": 7.640444444444444
+      },
+      "nextControl": {
+        "x": 8.221277777777779,
+        "y": 5.457272061934388
+      },
+      "isLocked": false,
+      "linkedName": "ActualSuckUp"
+    },
+    {
+      "anchor": {
+        "x": 8.221277777777779,
+        "y": 4.512477777777778
+      },
+      "prevControl": {
+        "x": 8.250511111111111,
+        "y": 6.480855555555555
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "CheeseEnd"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.2705394190871398,
+      "rotationDegrees": 0.4055356081231284
+    },
+    {
+      "waypointRelativePos": 0.9377593360995915,
+      "rotationDegrees": 89.54981182872885
+    }
+  ],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0.8754342431761643,
+      "maxWaypointRelativePos": 1.7250620347394559,
+      "constraints": {
+        "maxVelocity": 4.0,
+        "maxAcceleration": 6.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 6.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 90.0
+  },
+  "reversed": false,
+  "folder": "BS_Cheese",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 1.7342135033197992e-11
+  },
+  "useDefaultConstraints": true
+}

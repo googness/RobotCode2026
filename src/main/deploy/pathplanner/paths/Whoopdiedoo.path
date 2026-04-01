@@ -1,0 +1,105 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 4.508644444444445,
+        "y": 7.3968333333333325
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.944755555555556,
+        "y": 7.445555555555555
+      },
+      "isLocked": false,
+      "linkedName": "ShootANdGO"
+    },
+    {
+      "anchor": {
+        "x": 6.399066666666666,
+        "y": 4.609922222222221
+      },
+      "prevControl": {
+        "x": 6.418555555555556,
+        "y": 7.679422222222222
+      },
+      "nextControl": {
+        "x": 6.38545438810446,
+        "y": 2.465988348674825
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.687722222222223,
+        "y": 5.925422222222221
+      },
+      "prevControl": {
+        "x": 5.707211111111113,
+        "y": 2.4953777777777773
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "TurnTurn"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.17759336099585044,
+      "rotationDegrees": -89.5165575640272
+    },
+    {
+      "waypointRelativePos": 0.601659751037343,
+      "rotationDegrees": 95.87264389966951
+    },
+    {
+      "waypointRelativePos": 0.8713692946057856,
+      "rotationDegrees": 91.19740864896598
+    },
+    {
+      "waypointRelativePos": 1.2066390041493986,
+      "rotationDegrees": 0.0
+    },
+    {
+      "waypointRelativePos": 1.5551867219916977,
+      "rotationDegrees": -90.29757359056244
+    }
+  ],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0.10521091811414646,
+      "maxWaypointRelativePos": 0.7364764267990034,
+      "constraints": {
+        "maxVelocity": 5.0,
+        "maxAcceleration": 6.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 6.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -90.0
+  },
+  "reversed": false,
+  "folder": "BS_Cheese",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -90.0
+  },
+  "useDefaultConstraints": true
+}

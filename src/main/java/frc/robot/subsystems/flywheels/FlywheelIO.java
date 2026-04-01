@@ -47,9 +47,7 @@ public interface FlywheelIO {
 
   default void stopFlywheel() {}
 
-  default void extendHood() {}
-
-  default void retractHood() {}
+  default void testSpeed() {}
 
   default void setGains(double kP, double kI, double kD, double kS, double kV, double kA) {}
 }

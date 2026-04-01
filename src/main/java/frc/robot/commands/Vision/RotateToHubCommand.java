@@ -37,7 +37,8 @@ public class RotateToHubCommand extends Command {
   private final ProfiledPIDController thetaController;
 
   // Locations of the hubs
-  private final Translation2d redHubLocation = new Translation2d(11.919, 4.016);
+  private final Translation2d redHubLocation =
+      new Translation2d(11.670, 4.016); // (11.919, 4.016); Changed it so it aims slightly farther
   private final Translation2d blueHubLocation = new Translation2d(4.634, 4.016);
 
   // Constructor
@@ -62,14 +63,14 @@ public class RotateToHubCommand extends Command {
             RobotConfig.getInstance().getDriveFacingAngleThetaKD(),
             new TrapezoidProfile.Constraints(
                 Math.PI * 1.0, // Speed limit: 0.75 rotations per second
-                Math.PI * 2.0 // Acceleration limit
+                Math.PI * 1.0 // Acceleration limit
                 ));
 
     // Tell the PID that a circle connects so it spins the shortest way
     this.thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
     // Setting up a tolerance so the robot rotates until its within this range
-    this.thetaController.setTolerance(0.05, 0.05);
+    this.thetaController.setTolerance(0.02, 0.02);
 
     addRequirements(drivetrain);
   }
@@ -80,9 +81,7 @@ public class RotateToHubCommand extends Command {
     // This runs once when you pull the trigger.
     // If you want the Limelight Failsafe, call your reset method here!
 
-    // this.vision.resetOdometryToVisionPose();
-
-    flywheel.extendHood();
+    // this.vision.resetOdometryToVisionPose()
   }
 
   @Override
@@ -147,27 +146,27 @@ public class RotateToHubCommand extends Command {
 
     SmartDashboard.putNumber("distToHub", useThis);
 
-    // if (distanceInches >= 90) {
-    //   rps = 49;
-    // } else if (distanceInches >= 80) {
-    //   rps = 47;
-    // } else if (distanceInches >= 75) {
-    //   rps = 46;
-    // } else if (distanceInches >= 70) {
-    //   rps = 45;
-    // } else if (distanceInches >= 65) {
-    //   rps = 44;
-    // } else if (distanceInches >= 60) {
-    //   rps = 43;
-    // } else if (distanceInches >= 55) {
-    //   rps = 42;
-    // } else if (distanceInches >= 50) {
-    //   rps = 41;
-    // } else if (distanceInches >= 45) {
-    //   rps = 40;
-    // } else if (distanceInches >= 40) {
-    //   rps = 39;
-    // }
+    if (distanceInches >= 90) {
+      rps = 49;
+    } else if (distanceInches >= 80) {
+      rps = 47;
+    } else if (distanceInches >= 75) {
+      rps = 46;
+    } else if (distanceInches >= 70) {
+      rps = 45;
+    } else if (distanceInches >= 65) {
+      rps = 44;
+    } else if (distanceInches >= 60) {
+      rps = 43;
+    } else if (distanceInches >= 55) {
+      rps = 42;
+    } else if (distanceInches >= 50) {
+      rps = 41;
+    } else if (distanceInches >= 45) {
+      rps = 40;
+    } else if (distanceInches >= 40) {
+      rps = 39;
+    }
 
     flywheel.setVelocity(useThis);
 
@@ -188,7 +187,6 @@ public class RotateToHubCommand extends Command {
     flywheel.stopFlywheel();
     flywheel.stopAccelerator();
     drivetrain.stop();
-    flywheel.retractHood();
     System.out.println("End");
   }
 

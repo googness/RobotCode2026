@@ -28,6 +28,8 @@ import frc.robot.commands.AutonomousCommandsFactory;
 import frc.robot.commands.Flywheel.FlywheelCmds;
 import frc.robot.commands.Hopper.HopperCmds;
 import frc.robot.commands.SwerveDrivetrainCommandFactory;
+import frc.robot.commands.Vision.DriveToShoot;
+import frc.robot.commands.Vision.ResetPosetoVision;
 import frc.robot.commands.Vision.RotateToHubCommand;
 import frc.robot.configs.ThunderRobotConfig;
 import frc.robot.operator_interface.OISelector;
@@ -267,29 +269,92 @@ public class RobotContainer {
     //     .onFalse(new InstantCommand(hopper::stopIntake));
 
     // Shooter Commands
-    oi.lockOn()
-        .toggleOnTrue(
-            new RotateToHubCommand(
-                swerveDrivetrain,
-                jayvision,
-                flywheel,
-                () -> oi.getTranslateX(),
-                () -> oi.getTranslateY()));
+    // oi.lockOn()
+    //     .toggleOnTrue(
+    //         new RotateToHubCommand(
+    //             swerveDrivetrain,
+    //             jayvision,
+    //             flywheel,
+    //             () -> oi.getTranslateX(),
+    //             () -> oi.getTranslateY()));
+
+    /*     oi.testSpeed()
+           .toggleOnTrue(new InstantCommand(() -> flywheel.testSpeed()))
+           .onFalse(new InstantCommand(() -> flywheel.stopFlywheel()));
+    */
+
+    oi.testSpeed()
+        .toggleOnTrue(new InstantCommand(() -> flywheel.setVelocity(47)))
+        .onFalse(new InstantCommand(() -> flywheel.setVelocity(0)));
+
+    oi.setAgitator()
+        .onTrue(new InstantCommand(() -> hopper.setAgitator(0.2)))
+        .onFalse(new InstantCommand(() -> hopper.setAgitator(0)));
+
+    // oi.jayShot()
+    //     .whileTrue(
+    //         FlywheelCmds.runAccelerator(flywheel)
+    //             .alongWith(new InstantCommand(() -> hopper.setAgitator(-0.7)))
+    //             .alongWith(new InstantCommand(() -> hopper.runIntake()))
+    //             .alongWith(HopperCmds.runBelt(hopper))
+    //             .alongWith(
+    //                 new WaitCommand(1.5)
+    //                     .andThen(
+    //                         HopperCmds.GoToHomePos(hopper)
+    //                             // .alongWith(hopper.RunClearIntakeCmd())
+    //                             .withTimeout(3))))
+    //     .onFalse(
+    //         FlywheelCmds.stopAccelerator(flywheel)
+    //             .alongWith(new InstantCommand(() -> hopper.setAgitator(0)))
+    //             .alongWith(HopperCmds.stopBelt(hopper))
+    //             .alongWith(HopperCmds.stopIntake(hopper)));
 
     oi.jayShot()
         .whileTrue(
-            FlywheelCmds.runAccelerator(flywheel)
-                .alongWith(HopperCmds.runBelt(hopper))
-                .alongWith(
-                    new WaitCommand(1.5)
-                        .andThen(
-                            HopperCmds.GoToHomePos(hopper)
-                                .alongWith(hopper.RunClearIntakeCmd())
-                                .withTimeout(3))))
+            FlywheelCmds.getFixedShot(flywheel)
+                .andThen(new WaitCommand(.75))
+                .andThen(
+                    new InstantCommand(() -> flywheel.runAccelerator())
+                        .alongWith(new InstantCommand(() -> hopper.runBelt()))
+                        .alongWith(new InstantCommand(() -> hopper.setAgitator(0.7))))
+                .alongWith(new InstantCommand(() -> hopper.runIntake()))
+                .andThen(new WaitCommand(1.75))
+                .andThen(HopperCmds.SetHopperPOS(17, hopper))
+                .andThen(new WaitCommand(.5))
+                .andThen(HopperCmds.SetHopperPOS(21, hopper))
+                .andThen(new WaitCommand(.5))
+                .andThen(HopperCmds.SetHopperPOS(17, hopper))
+                .andThen(new WaitCommand(.5))
+                .andThen(HopperCmds.SetHopperPOS(21, hopper))
+                .andThen(new WaitCommand(.5))
+                .andThen(HopperCmds.SetHopperPOS(17, hopper))
+                .andThen(new WaitCommand(.5))
+                .andThen(HopperCmds.SetHopperPOS(21, hopper))
+                .andThen(new WaitCommand(1))
+                .andThen(HopperCmds.SetHopperPOS(15, hopper))
+                .andThen(new WaitCommand(.5))
+                .andThen(HopperCmds.SetHopperPOS(20, hopper))
+                .andThen(new WaitCommand(.5))
+                .andThen(HopperCmds.SetHopperPOS(2, hopper)))
         .onFalse(
-            FlywheelCmds.stopAccelerator(flywheel)
-                .alongWith(HopperCmds.stopBelt(hopper))
-                .alongWith(HopperCmds.stopIntake(hopper)));
+            new InstantCommand(() -> flywheel.stopFlywheel())
+                .alongWith(new InstantCommand(() -> flywheel.stopAccelerator()))
+                .alongWith(new InstantCommand(() -> hopper.stopBelt()))
+                .alongWith(new InstantCommand(() -> hopper.setAgitator(0)))
+                .alongWith(new InstantCommand(() -> hopper.stopIntake())));
+
+    // oi.jayShot().whileTrue(
+    //               FlywheelCmds.getFixedShot(flywheel)
+    //               .alongWith(new WaitCommand(1))
+    //               .andThen(new InstantCommand(() -> flywheel.runAccelerator())
+    //               .alongWith(new InstantCommand(() -> hopper.runBelt()))
+    //               .alongWith(new InstantCommand(() -> hopper.setAgitator(0.3)))
+    //               .alongWith(new WaitCommand(0.5))
+    //               .andThen(HopperCmds.GoToHalfPos(hopper)))
+    //               .alongWith(new WaitCommand(1))
+    //               .andThen(HopperCmds.GoToAgitatePos(hopper)))
+    //               .alongWith(new WaitCommand(1))
+    //               .andThen(HopperCmds.GoToHomePos(hopper));
 
     // Intake Commands
     oi.runIntake()
@@ -303,6 +368,19 @@ public class RobotContainer {
     oi.HopperToHomePos().onTrue(new InstantCommand(hopper::GoToHomePOS));
 
     oi.HopperToIntakePos().onTrue(new InstantCommand(hopper::GoToIntakePOS));
+
+    oi.resetVisionPos().onTrue(new ResetPosetoVision(jayvision));
+
+    oi.RotateToTag()
+        .whileTrue(
+            new RotateToHubCommand(
+                swerveDrivetrain,
+                jayvision,
+                flywheel,
+                () -> oi.getTranslateX(),
+                () -> oi.getTranslateY()));
+
+    oi.DriveToShoot().whileTrue(DriveToShoot.driveToShootCommand(swerveDrivetrain));
 
     // oi.runIntake()
     //     .onTrue(new InstantCommand(hopper::runIntake))

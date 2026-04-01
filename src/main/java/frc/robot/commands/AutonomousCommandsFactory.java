@@ -269,6 +269,13 @@ public class AutonomousCommandsFactory {
     Command CenterShoot = new PathPlannerAuto("CenterShoot");
     autoChooser.addDefaultOption("CenterShoot", CenterShoot);
 
+    // St Cloud Autos
+    Command NBS_Cheese = new PathPlannerAuto("NBS_Cheese");
+    autoChooser.addOption("NBS_Cheese", NBS_Cheese);
+
+    Command ResetVision = new PathPlannerAuto("ResetVision");
+    autoChooser.addOption("ResetVision", ResetVision);
+
     /************ Drive Velocity Tuning ************
      *
      * useful for tuning the drive velocity PID controller

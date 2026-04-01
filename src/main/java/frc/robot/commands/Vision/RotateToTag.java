@@ -32,7 +32,7 @@ public class RotateToTag extends Command {
 
   // Define which tags belong to which alliance
   // (Change these numbers to match the actual game manual for the hubs!)
-  private final List<Double> redHubTags = List.of(4.0, 5.0, 6.0);
+  private final List<Double> redHubTags = List.of(2.0, 4.0, 5.0, 10.0);
   private final List<Double> blueHubTags = List.of(7.0, 8.0, 9.0);
 
   // Setup the constructor

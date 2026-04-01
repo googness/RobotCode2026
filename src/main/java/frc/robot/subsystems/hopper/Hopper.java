@@ -34,7 +34,15 @@ public class Hopper extends SubsystemBase {
     setHopperPosition(HopperConstants.HOPPER_HOME_POSITION);
   }
 
-  private void setHopperPosition(double pos) {
+  public void GoToHalfPOS() {
+    setHopperPosition(HopperConstants.HOPPER_HALF_POSITION);
+  }
+
+  public void GoToAgitatePOS() {
+    setHopperPosition(HopperConstants.HOPPER_AGITATE_POSITION);
+  }
+
+  public void setHopperPosition(double pos) {
     mHopperMotorSetpoint = pos;
     io.setHopperPosition(mHopperMotorSetpoint);
   }
@@ -50,6 +58,10 @@ public class Hopper extends SubsystemBase {
 
   public void setHopperSpeed(double speed) {
     io.setHopperSpeed(speed);
+  }
+
+  public void setAgitator(double speed) {
+    io.setAgitator(speed);
   }
 
   public double getCurrentElevatorPos() {

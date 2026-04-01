@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 5.687722222222223,
+        "y": 5.925422222222221
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.950822222222221,
+        "y": 7.172711111111109
+      },
+      "isLocked": false,
+      "linkedName": "TurnTurn"
+    },
+    {
+      "anchor": {
+        "x": 4.469666666666667,
+        "y": 7.426066666666667
+      },
+      "prevControl": {
+        "x": 5.931333333333333,
+        "y": 7.474788888888888
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 6.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -90.0
+  },
+  "reversed": false,
+  "folder": "BS_Cheese",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -90.0
+  },
+  "useDefaultConstraints": true
+}

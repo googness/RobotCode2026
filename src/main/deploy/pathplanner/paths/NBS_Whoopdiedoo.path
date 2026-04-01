@@ -1,0 +1,103 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.251611111111111,
+        "y": 0.6634222222222217
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.9800555555555555,
+        "y": 0.546488888888889
+      },
+      "isLocked": false,
+      "linkedName": "shootngonbs"
+    },
+    {
+      "anchor": {
+        "x": 6.905777777777778,
+        "y": 2.3492111111111114
+      },
+      "prevControl": {
+        "x": 6.905777777777778,
+        "y": 1.7548
+      },
+      "nextControl": {
+        "x": 6.905777777777778,
+        "y": 2.9436222222222237
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 6.330855555555555,
+        "y": 4.746344444444444
+      },
+      "prevControl": {
+        "x": 6.896033333333334,
+        "y": 4.756088888888889
+      },
+      "nextControl": {
+        "x": 5.910888331094109,
+        "y": 4.73910363022959
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.92158888888889,
+        "y": 2.3492111111111114
+      },
+      "prevControl": {
+        "x": 5.931333333333335,
+        "y": 3.8011333333333335
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "NBSCheeseend"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.7145228215767512,
+      "rotationDegrees": -90.49515063998237
+    },
+    {
+      "waypointRelativePos": 1.5410788381742757,
+      "rotationDegrees": -88.80806212983892
+    },
+    {
+      "waypointRelativePos": 2.0041493775933628,
+      "rotationDegrees": 0.0
+    },
+    {
+      "waypointRelativePos": 2.57178423236514,
+      "rotationDegrees": 90.98256082054704
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 1.5,
+    "maxAcceleration": 6.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 90.0
+  },
+  "reversed": false,
+  "folder": "NBS_Cheese",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 65.82089285331082
+  },
+  "useDefaultConstraints": false
+}

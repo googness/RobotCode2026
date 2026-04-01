@@ -1,0 +1,83 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.793622222222222,
+        "y": 5.59411111111111
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.754644444444444,
+        "y": 7.806100000000001
+      },
+      "isLocked": false,
+      "linkedName": "OverBumpEnd"
+    },
+    {
+      "anchor": {
+        "x": 5.307688888888889,
+        "y": 7.377344444444444
+      },
+      "prevControl": {
+        "x": 4.307748604641967,
+        "y": 7.3664161353269915
+      },
+      "nextControl": {
+        "x": 8.874155555555557,
+        "y": 7.416322222222221
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.221277777777779,
+        "y": 7.2799000000000005
+      },
+      "prevControl": {
+        "x": 8.299233333333333,
+        "y": 9.92064444444444
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "ActualSuckUp"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.3236514522821878,
+      "rotationDegrees": 0.0
+    },
+    {
+      "waypointRelativePos": 1.1269709543568238,
+      "rotationDegrees": 0.0
+    },
+    {
+      "waypointRelativePos": 1.512033195020768,
+      "rotationDegrees": 87.32703129617207
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 6.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 90.0
+  },
+  "reversed": false,
+  "folder": "BS_Bump(Beta)",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -42.33699923393285
+  },
+  "useDefaultConstraints": true
+}

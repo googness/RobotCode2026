@@ -42,4 +42,6 @@ public interface HopperIO {
   public default void stopIntake() {}
 
   public default void stopBelt() {}
+
+  public default void setAgitator(double speed) {}
 }

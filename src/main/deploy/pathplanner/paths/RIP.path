@@ -1,0 +1,109 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 8.221277777777779,
+        "y": 7.2799000000000005
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 8.123833333333335,
+        "y": 5.711044444444445
+      },
+      "isLocked": false,
+      "linkedName": "ActualSuckUp"
+    },
+    {
+      "anchor": {
+        "x": 7.8704777777777775,
+        "y": 4.122699999999999
+      },
+      "prevControl": {
+        "x": 8.192044444444445,
+        "y": 4.112955555555555
+      },
+      "nextControl": {
+        "x": 7.61259829896003,
+        "y": 4.130514529661143
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.490444444444445,
+        "y": 5.0191888888888885
+      },
+      "prevControl": {
+        "x": 7.483499681084807,
+        "y": 4.744870736183216
+      },
+      "nextControl": {
+        "x": 7.509933333333334,
+        "y": 5.788999999999998
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.490444444444445,
+        "y": 6.656255555555555
+      },
+      "prevControl": {
+        "x": 7.490444444444445,
+        "y": 5.847466666666667
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Wooptiewoo"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.6149377593360804,
+      "rotationDegrees": 52.41702864414691
+    },
+    {
+      "waypointRelativePos": 0.9983402489626416,
+      "rotationDegrees": -89.86930810224754
+    }
+  ],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0.43176178660050313,
+      "maxWaypointRelativePos": 1.3667493796526098,
+      "constraints": {
+        "maxVelocity": 4.0,
+        "maxAcceleration": 6.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 6.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -90.0
+  },
+  "reversed": false,
+  "folder": "BS_Cheese",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 90.0
+  },
+  "useDefaultConstraints": true
+}

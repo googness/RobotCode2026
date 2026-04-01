@@ -5,32 +5,31 @@
     "data": {
       "commands": [
         {
-          "type": "parallel",
+          "type": "path",
+          "data": {
+            "pathName": "BallBall"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoIntake"
+          }
+        },
+        {
+          "type": "sequential",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "SimpleShootOne"
+                  "pathName": "OverBump"
                 }
               },
               {
-                "type": "sequential",
+                "type": "named",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 1.0
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "AutoIntake"
-                      }
-                    }
-                  ]
+                  "name": "AutoShoot"
                 }
               }
             ]
@@ -43,13 +42,26 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "SimpleShootTwo"
+                  "pathName": "BacktoBall"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "AutoShoot"
+                  "name": "AutoIntake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "RIP"
                 }
               }
             ]
@@ -59,6 +71,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "NBS",
+  "folder": "BS",
   "choreoAuto": false
 }

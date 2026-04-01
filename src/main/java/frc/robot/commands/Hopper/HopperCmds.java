@@ -39,6 +39,18 @@ public class HopperCmds {
     return new InstantCommand(() -> hopper.GoToHomePOS());
   }
 
+  public static Command GoToHalfPos(Hopper hopper) {
+    return new InstantCommand(() -> hopper.GoToHalfPOS());
+  }
+
+  public static Command GoToAgitatePos(Hopper hopper) {
+    return new InstantCommand(() -> hopper.GoToAgitatePOS());
+  }
+
+  public static Command SetHopperPOS(double pos, Hopper hopper) {
+    return new InstantCommand(() -> hopper.setHopperPosition(pos));
+  }
+
   public static Command autonomousIntake(Hopper hopper) {
     return new InstantCommand(hopper::GoToIntakePOS)
         .alongWith(new WaitCommand(0.15))

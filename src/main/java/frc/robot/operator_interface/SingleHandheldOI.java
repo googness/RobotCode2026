@@ -151,9 +151,9 @@ public class SingleHandheldOI extends OperatorDashboard {
     return controller.rightTrigger();
   }
 
-  public Trigger lockOn() {
-    return controller.leftTrigger();
-  }
+  // public Trigger lockOn() {
+  //   return controller.leftTrigger();
+  // }
 
   // Intake Buttons
   public Trigger runIntake() {
@@ -169,8 +169,6 @@ public class SingleHandheldOI extends OperatorDashboard {
     return controller.a();
   }
 
-
-
   // Drivetrain Buttons
   public Trigger DriveToShoot() {
     return controller.povDown();
@@ -180,4 +178,15 @@ public class SingleHandheldOI extends OperatorDashboard {
     return controller.povUp();
   }
 
+  public Trigger setAgitator() {
+    return controller.povLeft();
+  }
+
+  public Trigger resetVisionPos() {
+    return controller.povRight();
+  }
+
+  public Trigger testSpeed() {
+    return controller.leftTrigger();
+  }
 }

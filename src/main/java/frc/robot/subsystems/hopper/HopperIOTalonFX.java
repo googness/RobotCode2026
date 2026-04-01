@@ -20,6 +20,7 @@ public class HopperIOTalonFX implements HopperIO {
   private TalonFX beltMotor;
   private TalonFX intakeMotor;
   private TalonFX hopperMotor;
+  private TalonFX agitatorMotor;
   private DutyCycleEncoder hopperEncoder;
 
   private final MotionMagicVoltage hopperMotionMagicControl = new MotionMagicVoltage(0);
@@ -89,10 +90,12 @@ public class HopperIOTalonFX implements HopperIO {
     beltMotor = new TalonFX(hopperConfig.beltMotorId(), hopperConfig.CanBusName());
     intakeMotor = new TalonFX(hopperConfig.intakeMotorId(), hopperConfig.CanBusName());
     hopperMotor = new TalonFX(hopperConfig.hopperMotorId(), hopperConfig.CanBusName());
+    agitatorMotor = new TalonFX(hopperConfig.agitatorMotorId(), hopperConfig.CanBusName());
 
     configureHopperMotor(hopperMotor);
     configureBeltMotor(beltMotor);
     configureIntakeMotor(intakeMotor);
+    configureAgitatorMotor(agitatorMotor);
   }
 
   // set intake velocity
@@ -137,6 +140,39 @@ public class HopperIOTalonFX implements HopperIO {
   }
 
   public void configureBeltMotor(TalonFX motor) {
+
+    TalonFXConfiguration config = new TalonFXConfiguration();
+
+    config.MotorOutput.NeutralMode = NeutralModeValue.Coast;
+
+    config.Voltage.PeakForwardVoltage = 11.0;
+    config.Voltage.PeakReverseVoltage = -11.0;
+
+    config.CurrentLimits.StatorCurrentLimit = 60;
+    config.CurrentLimits.StatorCurrentLimitEnable = true;
+
+    config.CurrentLimits.SupplyCurrentLimit = 40;
+    config.CurrentLimits.SupplyCurrentLimitEnable = true;
+
+    config.Slot0.kV = 0.128;
+    config.Slot0.kP = 0.1;
+    config.Slot0.kD = 0.0;
+
+    motor.getConfigurator().apply(config);
+
+    // It is critical that devices are successfully configured. The applyAndCheckConfiguration
+    // method will apply the configuration, read back the configuration, and ensure that it is
+    // correct. If not, it will reattempt five times and eventually, generate an alert.
+    // Phoenix6Util.applyAndCheckConfiguration(beltMotor, config, beltConfigAlert);
+
+    // A subsystem needs to register each device with FaultReporter. FaultReporter will check
+    // devices for faults periodically when the robot is disabled and generate alerts if any faults
+    // are found.
+    // FaultReporter.getInstance()
+    // .registerHardware(HopperConstants.SUBSYSTEM_NAME, "Hopper Motor Belt", motor);
+  }
+
+  public void configureAgitatorMotor(TalonFX motor) {
 
     TalonFXConfiguration config = new TalonFXConfiguration();
 
@@ -250,6 +286,11 @@ public class HopperIOTalonFX implements HopperIO {
   //     hopperMotor.set(speed);
   //   }
   // }
+
+  @Override
+  public void setAgitator(double speed) {
+    agitatorMotor.set(speed);
+  }
 
   @Override
   public void setHopperSpeed(double speed) {

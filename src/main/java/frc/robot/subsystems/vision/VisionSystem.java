@@ -44,7 +44,7 @@ public class VisionSystem extends SubsystemBase {
 
       if (mt2.tagCount >= 2) {
         // if we have 2 tags, megatag 2 will be spot on
-        trustVision = 0.1;
+        trustVision = 0.5;
       } else {
         // create a scale factor based on our distance if we see 1 tag
         trustVision = 0.2 + (0.2 * mt2.avgTagDist);
@@ -64,12 +64,25 @@ public class VisionSystem extends SubsystemBase {
   }
 
   public void resetOdometryToVisionPose(LimelightHelpers.PoseEstimate mt2) {
-    if (mt2.tagCount >= 2) {
-      this.drivetrain.resetPose(
-          new Pose2d(mt2.pose.getX(), mt2.pose.getY(), this.drivetrain.getRotation()));
+    // 1. Completely ignore the request if no tags are visible
+    if (mt2.tagCount > 0) {
+
+      // 2. If we see 2 or more tags, do a hard reset of the pose
+      if (mt2.tagCount >= 2) {
+        this.drivetrain.resetPose(
+            new Pose2d(mt2.pose.getX(), mt2.pose.getY(), this.drivetrain.getRotation()));
+      }
+      // 3. If we only see 1 tag, add it as a vision measurement instead
+      else {
+        // Calculate the trust scale factor based on distance directly here
+        double currentTrust = 0.2 + (0.2 * mt2.avgTagDist);
+        this.drivetrain.addVisionMeasurement(
+            mt2.pose, mt2.timestampSeconds, VecBuilder.fill(currentTrust, currentTrust, 9999999));
+      }
     } else {
-      this.drivetrain.addVisionMeasurement(
-          mt2.pose, mt2.timestampSeconds, VecBuilder.fill(trustVision, trustVision, 9999999));
+      // Optional: You can add a print statement or Logger output here to
+      // alert the drivers that the pose reset was ignored due to missing tags.
+      System.out.println("Reset Pose Failed: No AprilTags visible.");
     }
   }
 

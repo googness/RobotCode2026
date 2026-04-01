@@ -186,4 +186,12 @@ public interface OperatorInterface {
   public default Trigger RotateToTag() {
     return new Trigger(() -> false);
   }
+
+  public default Trigger setAgitator() {
+    return new Trigger(() -> false);
+  }
+
+  public default Trigger testSpeed() {
+    return new Trigger(() -> false);
+  }
 }

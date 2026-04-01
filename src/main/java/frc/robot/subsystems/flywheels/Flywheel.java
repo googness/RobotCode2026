@@ -92,12 +92,8 @@ public class Flywheel extends SubsystemBase {
     io.stopAccelerator();
   }
 
-  public void extendHood() {
-    io.extendHood();
-  }
-
-  public void retractHood() {
-    io.retractHood();
+  public void testSpeed() {
+    io.testSpeed();
   }
 
   //   public Command ShootRpsCmd() {

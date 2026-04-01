@@ -1,0 +1,59 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 4.43068888888889,
+        "y": 7.620955555555556
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 8.747477777777778,
+        "y": 7.620955555555556
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.17255555555557,
+        "y": 4.960722222226748
+      },
+      "prevControl": {
+        "x": 8.200979885877349,
+        "y": 7.246989744818055
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "BallBall"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.29211087420042964,
+      "rotationDegrees": -0.10447661020717236
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 6.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 92.38594403038879
+  },
+  "reversed": false,
+  "folder": "BS_Bump(Beta)",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": true
+}

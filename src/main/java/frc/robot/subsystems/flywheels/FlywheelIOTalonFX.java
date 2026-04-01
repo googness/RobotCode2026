@@ -6,17 +6,14 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.NeutralOut;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj.Alert;
 import edu.wpi.first.wpilibj.Alert.AlertType;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.team254.Phoenix6Util;
 import frc.lib.team3015.subsystem.FaultReporter;
 import frc.lib.team6328.util.LoggedTunableNumber;
-import frc.robot.configs.ThunderRobotConfig;
 
 public class FlywheelIOTalonFX implements FlywheelIO {
 
@@ -47,13 +44,13 @@ public class FlywheelIOTalonFX implements FlywheelIO {
   private Alert accelerationConfigAlert =
       new Alert("Failed to apply configuration for subsystem.", AlertType.kError);
 
-  private int PH_CAN_ID = ThunderRobotConfig.PNEUMATICS_HUB_ID;
-  private static int hoodForwardChannel = 4;
-  private static int hoodReverseChannel = 5;
+  // private int PH_CAN_ID = ThunderRobotConfig.PNEUMATICS_HUB_ID;
+  // private static int hoodForwardChannel = 4;
+  // private static int hoodReverseChannel = 5;
 
-  PneumaticHub m_pH = new PneumaticHub(PH_CAN_ID);
-  DoubleSolenoid hoodDoubleSolenoid =
-      m_pH.makeDoubleSolenoid(hoodForwardChannel, hoodReverseChannel);
+  // PneumaticHub m_pH = new PneumaticHub(PH_CAN_ID);
+  // DoubleSolenoid hoodDoubleSolenoid =
+  //     m_pH.makeDoubleSolenoid(hoodForwardChannel, hoodReverseChannel);
 
   public FlywheelIOTalonFX() {
     frontShooter = new TalonFX(kFlywheelConfig.frontMotorCANId(), kFlywheelConfig.canBusName());
@@ -61,7 +58,10 @@ public class FlywheelIOTalonFX implements FlywheelIO {
     acceleratorMotor =
         new TalonFX(kFlywheelConfig.acceleratorMotorCANId(), kFlywheelConfig.canBusName());
 
-    hoodDoubleSolenoid.set(DoubleSolenoid.Value.kReverse);
+    //  hoodDoubleSolenoid.set(DoubleSolenoid.Value.kReverse);
+
+    configureBackMotor(backShooter);
+    configureFrontMotor(frontShooter);
   }
 
   // set front velocity
@@ -72,6 +72,8 @@ public class FlywheelIOTalonFX implements FlywheelIO {
   public void configureFrontMotor(TalonFX motor) {
 
     TalonFXConfiguration config = new TalonFXConfiguration();
+
+    config.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
 
     config.MotorOutput.NeutralMode = NeutralModeValue.Coast;
 
@@ -109,6 +111,7 @@ public class FlywheelIOTalonFX implements FlywheelIO {
     TalonFXConfiguration config = new TalonFXConfiguration();
 
     config.MotorOutput.NeutralMode = NeutralModeValue.Coast;
+    config.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
 
     config.Voltage.PeakForwardVoltage = 11.0;
     config.Voltage.PeakReverseVoltage = -11.0;
@@ -181,6 +184,12 @@ public class FlywheelIOTalonFX implements FlywheelIO {
   }
 
   @Override
+  public void testSpeed() {
+    frontShooter.set(0.75);
+    backShooter.set(1);
+  }
+
+  @Override
   public void runVelocity(double rps) {
     frontShooter.setControl(m_frontVelocityRequest.withVelocity(rps));
     backShooter.setControl(m_backVelocityRequest.withVelocity(rps));
@@ -200,16 +209,6 @@ public class FlywheelIOTalonFX implements FlywheelIO {
   @Override
   public void stopAccelerator() {
     acceleratorMotor.setControl(m_feedeNeutralOut);
-  }
-
-  @Override
-  public void extendHood() {
-    hoodDoubleSolenoid.set(Value.kForward);
-  }
-
-  @Override
-  public void retractHood() {
-    hoodDoubleSolenoid.set(Value.kReverse);
   }
 
   public void periodic() {
