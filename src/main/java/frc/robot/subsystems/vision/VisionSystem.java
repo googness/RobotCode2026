@@ -1,96 +1,94 @@
 package frc.robot.subsystems.vision;
 
-import edu.wpi.first.math.VecBuilder;
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.team3061.swerve_drivetrain.*;
+import frc.robot.Field2d;
+import java.util.List;
 import org.littletonrobotics.junction.Logger;
 
 public class VisionSystem extends SubsystemBase {
 
-  private final SwerveDrivetrain drivetrain;
+  private final VisionSystemIO io;
+  private final VisionSystemIOInputsAutoLogged VisionInputs = new VisionSystemIOInputsAutoLogged();
 
-  // Trust Megatag 2
-  double trustVision;
+  private final Translation2d redHubTarget = new Translation2d(11.919, 4.041); // True center
+  private final Translation2d blueHubTarget = new Translation2d(4.621, 4.029); // True center
+
+  // private final Translation2d BlueLeftofHubZone = new Translation2d(2.085, 6.0); // True center
+  // private final Translation2d BlueRightofHubZone = new Translation2d(2.085, 2.068); // True
+  // center
+
+  // private final Translation2d RedLeftofHubZone = new Translation2d(14.424, 6.0); // True center
+  // private final Translation2d RedRightofHubZone = new Translation2d(14.424, 2.068); // True
+  // center
+
+  // private final Translation2d UpperMiddleZone = new Translation2d(8.249, 6.0); // True center
+  // private final Translation2d LowerMiddleZone = new Translation2d(8.249, 2.068); // True center
+
+  // Added translations of the shooting zones
+  private static final List<Translation2d> SHUTTLE_ZONES =
+      List.of(
+          new Translation2d(2.085, 6.0), // Left of blue hub
+          new Translation2d(2.085, 2.068), // Right of blue hub
+          new Translation2d(14.424, 6.0), // Left of red hub
+          new Translation2d(14.424, 2.068), // Right of red hub
+          new Translation2d(8.249, 6.0), // Upper side of middle
+          new Translation2d(8.249, 2.068) // Lower side of middle
+          );
+
+  public static Translation2d getNearestZone(Translation2d currentTranslation) {
+
+    // Start by assuming the first spot in the list is the closest
+    Translation2d nearestZone = SHUTTLE_ZONES.get(0);
+    double shortestDistance = currentTranslation.getDistance(nearestZone);
+
+    // Check all 6 spots to see if any are closer
+    for (Translation2d zone : SHUTTLE_ZONES) {
+      double distance = currentTranslation.getDistance(zone);
+
+      if (distance < shortestDistance) {
+        shortestDistance = distance; // We found a closer one! Save the new distance.
+        nearestZone = zone; // Update our target translation.
+      }
+    }
+
+    return nearestZone;
+  }
+
+  private final SwerveDrivetrain drivetrain;
 
   public VisionSystem(SwerveDrivetrain drivetrain) {
     this.drivetrain = drivetrain;
+    io = new VisionSystemIOLimelight(drivetrain);
   }
 
-  public void periodic() {
-
-    double gyroDeg = this.drivetrain.getPose().getRotation().getDegrees();
-
-    if (DriverStation.isDisabled()) {
-      LimelightHelpers.SetIMUMode("limelight-thunder", 1);
-    } else {
-      LimelightHelpers.SetIMUMode("limelight-thunder", 4);
-    }
-
-    double omegaDegPerSec =
-        Units.radiansToDegrees(this.drivetrain.getRobotRelativeSpeeds().omegaRadiansPerSecond);
-
-    LimelightHelpers.SetRobotOrientation("limelight-thunder", gyroDeg, omegaDegPerSec, 0, 0, 0, 0);
-
-    // Get the MegaTag 2 Pose Estimate
-    LimelightHelpers.PoseEstimate mt2 =
-        LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight-thunder");
-
-    // We check tagCount > 0 to ensure we actually see something
-    if (mt2.tagCount > 0) {
-
-      if (mt2.tagCount >= 2) {
-        // if we have 2 tags, megatag 2 will be spot on
-        trustVision = 0.5;
-      } else {
-        // create a scale factor based on our distance if we see 1 tag
-        trustVision = 0.2 + (0.2 * mt2.avgTagDist);
-      }
-
-      // Add vision measurements to the odometry
-      this.drivetrain.addVisionMeasurement(
-          mt2.pose, mt2.timestampSeconds, VecBuilder.fill(trustVision, trustVision, 9999999));
-
-      // Record the distance to apriltag
-      double distMeters = mt2.rawFiducials[0].distToCamera;
-
-      double distInch = Units.metersToInches(distMeters);
-
-      Logger.recordOutput("Limelight" + "/Limelight/DistanceInch", distInch);
-    }
+  public void resetOdometryToVisionPose() {
+    io.resetOdometryToVisionPose();
   }
 
-  public void resetOdometryToVisionPose(LimelightHelpers.PoseEstimate mt2) {
-    // 1. Completely ignore the request if no tags are visible
-    if (mt2.tagCount > 0) {
-
-      // 2. If we see 2 or more tags, do a hard reset of the pose
-      if (mt2.tagCount >= 2) {
-        this.drivetrain.resetPose(
-            new Pose2d(mt2.pose.getX(), mt2.pose.getY(), this.drivetrain.getRotation()));
-      }
-      // 3. If we only see 1 tag, add it as a vision measurement instead
-      else {
-        // Calculate the trust scale factor based on distance directly here
-        double currentTrust = 0.2 + (0.2 * mt2.avgTagDist);
-        this.drivetrain.addVisionMeasurement(
-            mt2.pose, mt2.timestampSeconds, VecBuilder.fill(currentTrust, currentTrust, 9999999));
-      }
-    } else {
-      // Optional: You can add a print statement or Logger output here to
-      // alert the drivers that the pose reset was ignored due to missing tags.
-      System.out.println("Reset Pose Failed: No AprilTags visible.");
+  private Translation2d getHubTarget() {
+    if (Field2d.getInstance().getAlliance() == Alliance.Blue) {
+      return blueHubTarget;
     }
+
+    return redHubTarget;
   }
 
-  // Get the distance of the robot to the target based on odemetry
+  public double distanceToHub() {
+    return this.drivetrain.getPose().getTranslation().getDistance(getHubTarget());
+  }
+
   public double getOdometryDist(double targetX, double targetY) {
-    // Get the target
     Translation2d target = new Translation2d(targetX, targetY);
-
     return this.drivetrain.getPose().getTranslation().getDistance(target);
+  }
+
+  @Override
+  public void periodic() {
+    io.updateInputs(VisionInputs);
+
+    Logger.processInputs(VisionSystemConstants.SUBSYSTEM_NAME, VisionInputs);
   }
 }

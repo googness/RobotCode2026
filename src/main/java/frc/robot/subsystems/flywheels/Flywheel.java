@@ -3,13 +3,19 @@ package frc.robot.subsystems.flywheels;
 import static frc.robot.subsystems.flywheels.FlywheelConstants.*;
 
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.StartEndCommand;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.lib.team6328.util.LoggedTunableNumber;
+import frc.robot.subsystems.vision.VisionSystem;
 import org.littletonrobotics.junction.Logger;
 
 public class Flywheel extends SubsystemBase {
+
+  private static final LoggedTunableNumber mFlywheelRps =
+      new LoggedTunableNumber("Flywheel/FlywheelRps", FlywheelConstants.kDefaultShootingRps);
 
   private FlywheelIO io;
   private final FlywheelIOInputsAutoLogged inputs = new FlywheelIOInputsAutoLogged();
@@ -33,86 +39,86 @@ public class Flywheel extends SubsystemBase {
   public Flywheel(FlywheelIO io) {
     this.io = io;
 
+    // SmartDashboard.putNumber("distToHubNotRps", 0);
+    // distanceToRpsMap.put(100.0, 41.0);
+    // distanceToRpsMap.put(105.0, 42.0);
+    // distanceToRpsMap.put(110.0, 43.0);
+    // distanceToRpsMap.put(115.0, 43.5);
+    // distanceToRpsMap.put(120.0, 44.0);
+    // distanceToRpsMap.put(125.0, 44.5);
+    // distanceToRpsMap.put(130.0, 45.0);
+    // distanceToRpsMap.put(135.0, 45.5);
+    // distanceToRpsMap.put(145.0, 46.5); //
+    // distanceToRpsMap.put(155.0, 47.0); //
+
     SmartDashboard.putNumber("distToHubNotRps", 0);
-
-    // distanceToRpsMap.put(40.0, 39.0);
-    // distanceToRpsMap.put(45.0, 40.0);
-    // distanceToRpsMap.put(50.0, 41.0);
-    // distanceToRpsMap.put(55.0, 42.0);
-    // distanceToRpsMap.put(60.0, 43.0);
-    // distanceToRpsMap.put(65.0, 44.0);
-    // distanceToRpsMap.put(70.0, 45.0);
-    // distanceToRpsMap.put(75.0, 46.0);
-    // distanceToRpsMap.put(80.0, 47.0);
-    // distanceToRpsMap.put(90.0, 49.0);
-
-    distanceToRpsMap.put(30.0, 41.0);
-    distanceToRpsMap.put(35.0, 42.0);
-    distanceToRpsMap.put(40.0, 43.0);
-    distanceToRpsMap.put(45.0, 43.5);
-    distanceToRpsMap.put(50.0, 44.0);
-    distanceToRpsMap.put(55.0, 44.5);
-    distanceToRpsMap.put(60.0, 45.0);
-    distanceToRpsMap.put(65.0, 45.5);
-    distanceToRpsMap.put(70.0, 46.5);
-    distanceToRpsMap.put(75.0, 47.0);
-    // distanceToRpsMap.put(80.0, 47.5);
-    // distanceToRpsMap.put(85.0, 48.5);
-    // distanceToRpsMap.put(90.0, 49.0);
+    distanceToRpsMap.put(75.0, 37.0);
+    distanceToRpsMap.put(80.0, 37.5);
+    distanceToRpsMap.put(85.0, 38.0);
+    distanceToRpsMap.put(90.0, 38.5);
+    distanceToRpsMap.put(100.0, 41.0);
+    distanceToRpsMap.put(105.0, 41.5);
+    distanceToRpsMap.put(110.0, 42.0);
+    distanceToRpsMap.put(115.0, 42.5);
+    distanceToRpsMap.put(120.0, 43.0);
+    distanceToRpsMap.put(125.0, 43.5);
+    distanceToRpsMap.put(130.0, 44.0);
+    distanceToRpsMap.put(135.0, 45.0);
+    distanceToRpsMap.put(140.0, 45.5);
+    distanceToRpsMap.put(145.0, 46.5);
+    distanceToRpsMap.put(150.0, 46.5);
+    distanceToRpsMap.put(155.0, 47.0);
+    distanceToRpsMap.put(160.0, 48.0); //
   }
 
   @Override
   public void periodic() {
-    // updating the inputs
     io.updateInputs(inputs);
 
-    // putting the inputs into advantagescope
     Logger.processInputs(SUBSYSTEM_NAME, inputs);
   }
 
-  // Set the velocity of the flywheels
+  private double mVelocitySetpoint = 0;
+  private double mDistanceTolerance = 3;
+  private double mLastDistance = 0;
+
   public void setVelocity() {
-    io.runVelocity();
+    setVelocity(mFlywheelRps.get());
   }
 
   public void setVelocity(double rps) {
     io.runVelocity(rps);
+    mVelocitySetpoint = rps;
   }
 
-  // stop the flywheels
   public void stopFlywheel() {
     io.stopFlywheel();
+    mVelocitySetpoint = 0;
   }
 
-  public void runAccelerator() {
-    io.runAccelerator();
-  }
+  public Command runScoreWithVisionCmd(VisionSystem vision) {
+    return Commands.run(
+            () -> {
+              double currentDistance = Units.metersToInches(vision.distanceToHub());
 
-  public void stopAccelerator() {
-    io.stopAccelerator();
-  }
+              Logger.recordOutput("FlywheelStuff/VelocitySetpoint", mVelocitySetpoint);
+              Logger.recordOutput("FlywheelStuff/CurrentDistance", currentDistance);
+              Logger.recordOutput("FlywheelStuff/LastDistance", mLastDistance);
 
-  public void testSpeed() {
-    io.testSpeed();
-  }
+              if (Math.abs(currentDistance - mLastDistance) > mDistanceTolerance) {
+                double newSpeed = distanceToRpsMap.get(currentDistance);
 
-  //   public Command ShootRpsCmd() {
-  //     return new StartEndCommand(
-  //         () -> {
-  //             double frps = SmartDashboard.getNumber("Shooter/SetFrontRps", 0.0);
-  //             double brps = SmartDashboard.getNumber("Shooter/SetBackRps", 0.0);
-  //             runFlywheel(frps,brps);
-  //         },
-  //         () -> stop());
-  // }
+                Logger.recordOutput("FlywheelStuff/newSpeed", newSpeed);
 
-  public Command FeederRpsCmd() {
-    return new StartEndCommand(
-        () -> {
-          // double frps = SmartDashboard.getNumber("Shooter/SetFeedRps", 0.0);
-
-          runAccelerator();
-        },
-        () -> stopAccelerator());
+                setVelocity(newSpeed);
+                mLastDistance = currentDistance;
+              }
+            },
+            this)
+        .finallyDo(
+            () -> {
+              stopFlywheel();
+              mLastDistance = 0;
+            });
   }
 }

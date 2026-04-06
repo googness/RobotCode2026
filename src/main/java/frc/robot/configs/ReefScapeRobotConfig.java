@@ -21,7 +21,7 @@ import frc.lib.team3061.swerve_drivetrain.swerve.SwerveConstants;
  */
 public class ReefScapeRobotConfig extends RobotConfig {
 
-  // FIXME: update all CAN IDs and steer offsets
+  // : update all CAN IDs and steer offsets
   private static final int FRONT_LEFT_MODULE_DRIVE_MOTOR = 3;
   private static final int FRONT_LEFT_MODULE_STEER_MOTOR = 5;
   private static final int FRONT_LEFT_MODULE_STEER_ENCODER = 4;
@@ -44,30 +44,29 @@ public class ReefScapeRobotConfig extends RobotConfig {
 
   private static final int GYRO_ID = 15;
 
-  // FIXME: update robot dimensions
+  // : update robot dimensions
   private static final Mass MASS =
-      Kilograms.of(
-          51.862); // FIXME: update based on measured mass of robot with battery and bumpers
-  private static final MomentOfInertia MOI = KilogramSquareMeters.of(6.0); // FIXME: measure
+      Kilograms.of(51.862); // : update based on measured mass of robot with battery and bumpers
+  private static final MomentOfInertia MOI = KilogramSquareMeters.of(6.0); // : measure
   private static final Distance TRACKWIDTH = Meters.of(0.523875);
   private static final Distance WHEELBASE = Meters.of(0.52705);
   private static final Distance WHEEL_RADIUS = Meters.of(0.09845567409 / 2.0);
   private static final double WHEEL_COEFFICIENT_OF_FRICTION =
-      1.2; // FIXME: update based on wheel coefficient of friction
+      1.2; // : update based on wheel coefficient of friction
   private static final Translation2d FRONT_RIGHT_CORNER_POSITION = new Translation2d(0.36, -0.36);
   private static final Distance ROBOT_WIDTH_WITH_BUMPERS = Meters.of(0.8382);
   private static final Distance ROBOT_LENGTH_WITH_BUMPERS = Meters.of(0.8382);
 
-  private static final double COUPLE_RATIO = 3.125; // FIXME: tune
+  private static final double COUPLE_RATIO = 3.125; // : tune
 
-  // FIXME: tune PID values for the angle and drive motors for the swerve modules
+  // : tune PID values for the angle and drive motors for the swerve modules
 
   /* Angle Motor PID Values */
   private static final double ANGLE_KP = 100.0;
   private static final double ANGLE_KI = 0.0;
   private static final double ANGLE_KD = 0.05;
 
-  // FIXME: characterize the drivetrain and update these constants
+  // : characterize the drivetrain and update these constants
   private static final double ANGLE_KS = 0.1891233333;
   private static final double ANGLE_KV =
       0.4399866667 * 2 * Math.PI; // convert from V/(radians/s) to V/(rotations/s)
@@ -78,35 +77,35 @@ public class ReefScapeRobotConfig extends RobotConfig {
   private static final double DRIVE_KI = 0.0;
   private static final double DRIVE_KD = 0.0;
 
-  // FIXME: characterize the drivetrain and update these constants
+  // : characterize the drivetrain and update these constants
   private static final double DRIVE_KS = 5.0;
   private static final double DRIVE_KV = 0.0;
   private static final double DRIVE_KA = 0.0;
 
-  // FIXME: determine maximum velocities empirically
+  // : determine maximum velocities empirically
   private static final LinearVelocity MAX_VELOCITY = MetersPerSecond.of(3.5);
   private static final LinearVelocity MAX_COAST_VELOCITY = MetersPerSecond.of(0.05);
   private static final double SLOW_MODE_MULTIPLIER = 0.75;
 
-  // FIXME: specify the name of the CANivore CAN FD bus as appropriate (an empty string uses the
+  // : specify the name of the CANivore CAN FD bus as appropriate (an empty string uses the
   // default CAN bus)
   private static final String CAN_BUS_NAME = "TheCan";
   private static final CANBus CAN_BUS = new CANBus(CAN_BUS_NAME);
 
-  // FIXME: specify the name of the camera used for detecting AprilTags
+  // : specify the name of the camera used for detecting AprilTags
   private static final String CAMERA_NAME = "OV2311";
 
-  // FIXME: update this with the actual transform from the robot to the camera
+  // : update this with the actual transform from the robot to the camera
   private static final Transform3d ROBOT_TO_CAMERA =
       new Transform3d(new Translation3d(0, 0, 0), new Rotation3d(0, 0, 0));
 
-  // FIXME: specify the configuration for pneumatics
+  // : specify the configuration for pneumatics
   private static final int PNEUMATICS_HUB_ID = 20;
   private static final int FLOW_SENSOR_CHANNEL = 0;
   private static final int REV_HIGH_PRESSURE_SENSOR_CHANNEL = 0;
   private static final int REV_LOW_PRESSURE_SENSOR_CHANNEL = 1;
 
-  // FIXME: specify maximum velocity and acceleration and tune PID values for auto paths
+  // : specify maximum velocity and acceleration and tune PID values for auto paths
   private static final double AUTO_DRIVE_P_CONTROLLER = 5.0;
   private static final double AUTO_DRIVE_I_CONTROLLER = 0.0;
   private static final double AUTO_DRIVE_D_CONTROLLER = 0.0;
@@ -114,7 +113,7 @@ public class ReefScapeRobotConfig extends RobotConfig {
   private static final double AUTO_TURN_I_CONTROLLER = 0.0;
   private static final double AUTO_TURN_D_CONTROLLER = 0.0;
 
-  // FIXME: tune PID values for drive to pose
+  // : tune PID values for drive to pose
   // Drive to Pose constants
   private static final double DRIVE_TO_POSE_DRIVE_KP = 2.5;
   private static final double DRIVE_TO_POSE_DRIVE_KD = 0.0;
@@ -127,18 +126,18 @@ public class ReefScapeRobotConfig extends RobotConfig {
 
   private static final LinearVelocity SQUARING_SPEED = MetersPerSecond.of(1.0);
 
-  // FIXME: tune PID values for drive facing angle
+  // : tune PID values for drive facing angle
   // Drive Facing Angle constants
   private static final double DRIVE_FACING_ANGLE_KP = 6.0;
   private static final double DRIVE_FACING_ANGLE_KD = 0.1;
   private static final double DRIVE_FACING_ANGLE_KI = 0.0;
 
-  // FIXME: specify the number of LEDs
+  // : specify the number of LEDs
   // private static final int LED_COUNT = 85;
 
   @Override
   public boolean getPhoenix6Licensed() {
-    // FIXME: return true if you have Phoenix 6 Pro license
+    // : return true if you have Phoenix 6 Pro license
     return false;
   }
 
@@ -204,7 +203,7 @@ public class ReefScapeRobotConfig extends RobotConfig {
 
   @Override
   public SwerveConstants getSwerveConstants() {
-    // FIXME: specify the type of swerve module (MK4, MK4i, MK4n are supported)
+    // : specify the type of swerve module (MK4, MK4i, MK4n are supported)
     return SwerveConstants.MK4I_L2_CONSTANTS;
   }
 
@@ -459,7 +458,7 @@ public class ReefScapeRobotConfig extends RobotConfig {
 
   @Override
   public double getOdometryUpdateFrequency() {
-    // FIXME: return 250 Hz if using the DrivetrainIOCTRE class
+    // : return 250 Hz if using the DrivetrainIOCTRE class
     return 50.0;
   }
 

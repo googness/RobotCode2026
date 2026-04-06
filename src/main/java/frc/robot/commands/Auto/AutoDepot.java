@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.lib.team3061.RobotConfig;
 import frc.lib.team3061.swerve_drivetrain.*;
 import frc.robot.subsystems.flywheels.Flywheel;
-import frc.robot.subsystems.vision.VisionSystem;
 
 public class AutoDepot extends Command {
 
@@ -21,7 +20,7 @@ public class AutoDepot extends Command {
   private final SwerveDrivetrain drivetrain;
 
   // Import VisionSystem
-  private final VisionSystem vision;
+  // private final VisionSystem vision;
 
   private final Flywheel flywheels;
 
@@ -36,10 +35,13 @@ public class AutoDepot extends Command {
 
   // Constructor
   public AutoDepot(
-      double rps, SwerveDrivetrain drivetrain, VisionSystem vision, Flywheel flywheel) {
+      double rps,
+      SwerveDrivetrain drivetrain,
+      // VisionSystem vision,
+      Flywheel flywheel) {
     this.mRps = rps;
     this.drivetrain = drivetrain;
-    this.vision = vision;
+    // this.vision = vision;
     this.flywheels = flywheel;
 
     // Build the PID controller using your constants

@@ -9,7 +9,6 @@ public class HopperCmds {
 
   private HopperCmds() {}
 
-  // Default Commands
   public static Command runIntake(Hopper hopper) {
     return new InstantCommand(() -> hopper.runIntake());
   }
@@ -30,6 +29,14 @@ public class HopperCmds {
     return new InstantCommand(() -> hopper.reverseIntake());
   }
 
+  public static Command runAccelerator(Hopper hopper) {
+    return new InstantCommand(() -> hopper.runAccelerator());
+  }
+
+  public static Command stopAccelerator(Hopper hopper) {
+    return new InstantCommand(() -> hopper.stopAccelerator());
+  }
+
   // St Cloud Commands
   public static Command GoToIntakePos(Hopper hopper) {
     return new InstantCommand(() -> hopper.GoToIntakePOS());
@@ -37,14 +44,6 @@ public class HopperCmds {
 
   public static Command GoToHomePos(Hopper hopper) {
     return new InstantCommand(() -> hopper.GoToHomePOS());
-  }
-
-  public static Command GoToHalfPos(Hopper hopper) {
-    return new InstantCommand(() -> hopper.GoToHalfPOS());
-  }
-
-  public static Command GoToAgitatePos(Hopper hopper) {
-    return new InstantCommand(() -> hopper.GoToAgitatePOS());
   }
 
   public static Command SetHopperPOS(double pos, Hopper hopper) {

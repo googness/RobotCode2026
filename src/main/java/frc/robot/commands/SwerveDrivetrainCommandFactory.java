@@ -3,7 +3,6 @@ package frc.robot.commands;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.lib.team3061.leds.LEDs;
 import frc.lib.team3061.swerve_drivetrain.SwerveDrivetrain;
 import frc.lib.team3061.vision.Vision;
 import frc.robot.operator_interface.OperatorInterface;
@@ -32,10 +31,11 @@ public class SwerveDrivetrainCommandFactory {
     driveToPoseCanceledTrigger = new Trigger(swerveDrivetrain::getDriveToPoseCanceled);
     driveToPoseCanceledTrigger.onTrue(
         Commands.sequence(
-                Commands.run(
-                        () -> LEDs.getInstance().requestState(LEDs.States.DRIVE_TO_POSE_CANCELED),
-                        swerveDrivetrain)
-                    .withTimeout(0.5),
+                // Commands.run(
+                //         () ->
+                // LEDs.getInstance().requestState(LEDs.States.DRIVE_TO_POSE_CANCELED),
+                //         swerveDrivetrain)
+                //     .withTimeout(0.5),
                 Commands.runOnce(() -> swerveDrivetrain.setDriveToPoseCanceled(false)))
             .withName("cancel drive to pose"));
 

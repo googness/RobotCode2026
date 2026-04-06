@@ -16,12 +16,14 @@ public class LEDsRIO extends LEDs {
   protected LEDsRIO() {
     leds = new AddressableLED(0);
 
-    buffer = new AddressableLEDBuffer(ACTUAL_LENGTH);
+    // Some asshoe hardcoded this numebr,  I am setting 0;
+    // buffer = new AddressableLEDBuffer(ACTUAL_LENGTH);
+    buffer = new AddressableLEDBuffer(0);
     // leds.setBitTiming(500, 200, 1200, 1300);
     isGRB = Constants.getMode() != Constants.Mode.SIM;
     competitionBrightness = true;
 
-    leds.setLength(ACTUAL_LENGTH);
+    leds.setLength(0);
     leds.setData(buffer);
     leds.start();
   }

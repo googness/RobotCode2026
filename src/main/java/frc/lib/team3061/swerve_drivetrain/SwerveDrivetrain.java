@@ -19,7 +19,6 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Twist2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -41,7 +40,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.lib.team3015.subsystem.FaultReporter;
 import frc.lib.team3061.RobotConfig;
-import frc.lib.team3061.leds.LEDs;
 import frc.lib.team3061.swerve_drivetrain.SwerveDrivetrainConstants.SysIDCharacterizationMode;
 import frc.lib.team3061.util.CustomPoseEstimator;
 import frc.lib.team3061.util.RobotOdometry;
@@ -365,6 +363,15 @@ public class SwerveDrivetrain extends SubsystemBase implements CustomPoseEstimat
   }
 
   /**
+   * Returns shit that Jay wants
+   *
+   * @return the angularVelocityZWorld of the drivetrain as reported by the gyro in degrees
+   */
+  public AngularVelocity getAngularVelocityZWorld() {
+    return this.inputs.drivetrain._angularVelocityZWorld;
+  }
+
+  /**
    * Sets the rotation of the robot to the specified value. This method should only be invoked when
    * the rotation of the robot is known (e.g., at the start of an autonomous path). Usually, the
    * resetPose method is used instead. Zero degrees is facing away from the driver station; CCW is
@@ -635,11 +642,11 @@ public class SwerveDrivetrain extends SubsystemBase implements CustomPoseEstimat
     Logger.recordOutput(SUBSYSTEM_NAME + "/Pose", pose);
     Logger.recordOutput(SUBSYSTEM_NAME + "/CustomPose", this.customPose);
 
-    Logger.recordOutput(
-        SUBSYSTEM_NAME + "/FRPose",
-        pose.transformBy(
-            new Transform2d(
-                RobotConfig.getInstance().getFrontRightCornerPosition(), new Rotation2d())));
+    // Logger.recordOutput(
+    //     SUBSYSTEM_NAME + "/FRPose",
+    //     pose.transformBy(
+    //         new Transform2d(
+    //             RobotConfig.getInstance().getFrontRightCornerPosition(), new Rotation2d())));
 
     // check for position outside the field due to slipping
     if (pose.getX() < 0) {
@@ -661,12 +668,12 @@ public class SwerveDrivetrain extends SubsystemBase implements CustomPoseEstimat
 
     Logger.recordOutput(SUBSYSTEM_NAME + "/FieldRelative", this.getFieldRelative());
 
-    Logger.recordOutput(
-        SUBSYSTEM_NAME + "/Speed",
-        Math.hypot(
-            inputs.drivetrain.measuredChassisSpeeds.vxMetersPerSecond,
-            inputs.drivetrain.measuredChassisSpeeds.vyMetersPerSecond),
-        MetersPerSecond);
+    // Logger.recordOutput(
+    //     SUBSYSTEM_NAME + "/Speed",
+    //     Math.hypot(
+    //         inputs.drivetrain.measuredChassisSpeeds.vxMetersPerSecond,
+    //         inputs.drivetrain.measuredChassisSpeeds.vyMetersPerSecond),
+    //     MetersPerSecond);
 
     // update the brake mode based on the robot's velocity and state (enabled/disabled)
     updateBrakeMode();
@@ -981,7 +988,7 @@ public class SwerveDrivetrain extends SubsystemBase implements CustomPoseEstimat
             || this.inputs.drivetrain.pitch.gt(TILT_THRESHOLD)
             || this.inputs.drivetrain.pitch.lt(TILT_THRESHOLD.unaryMinus());
     if (isTilted) {
-      LEDs.getInstance().requestState(LEDs.States.UNTILTING_ROBOT);
+      // LEDs.getInstance().requestState(LEDs.States.UNTILTING_ROBOT);
     }
 
     return isTilted;

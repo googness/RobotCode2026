@@ -394,6 +394,10 @@ public class Phoenix6Util {
 
   // INFO: 876 Justin I hacked the fuck outtathis!
   /** Registers a set of signals for synchronized refresh. */
+
+  // Quci khack, check to dee if riosignals length is 0
+  static boolean refreshRioBusSignals = false;
+
   public static void registerSignals(boolean canivore, BaseStatusSignal... signals) {
     for (BaseStatusSignal signal : signals) {
       if (signal == null) {
@@ -408,6 +412,7 @@ public class Phoenix6Util {
       if (canivore) {
         canivoreSignals.addSignals(signal);
       } else {
+        refreshRioBusSignals = true;
         rioSignals.addSignals(signal);
       }
     }
@@ -419,6 +424,9 @@ public class Phoenix6Util {
         canivoreSignals.refreshAll(),
         "failed to refresh signals on CANivore:",
         canivoreSignalsAlert);
-    checkError(rioSignals.refreshAll(), "failed to refresh signals on RIO:", rioSignalsAlert);
+
+    if (refreshRioBusSignals) {
+      checkError(rioSignals.refreshAll(), "failed to refresh signals on RIO:", rioSignalsAlert);
+    }
   }
 }

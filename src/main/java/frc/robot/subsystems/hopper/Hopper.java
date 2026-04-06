@@ -1,45 +1,21 @@
 package frc.robot.subsystems.hopper;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import org.littletonrobotics.junction.Logger;
 
 public class Hopper extends SubsystemBase {
-
   private final HopperIO io;
-
   private final HopperIOInputsAutoLogged HopperInputs = new HopperIOInputsAutoLogged();
 
   private double mHopperMotorSetpoint = 0;
+  private boolean mHopperExtended = false;
 
   public Hopper(HopperIO io) {
     this.io = io;
-  }
-
-  @Override
-  public void periodic() {
-    // the first step in periodic is to update the inputs from the IO implementation.
-    io.updateInputs(HopperInputs);
-
-    Logger.processInputs(HopperConstants.SUBSYSTEM_NAME, HopperInputs);
-  }
-
-  public void GoToIntakePOS() {
-    setHopperPosition(HopperConstants.HOPPER_INTAKE_POSITION);
-  }
-
-  public void GoToHomePOS() {
-    setHopperPosition(HopperConstants.HOPPER_HOME_POSITION);
-  }
-
-  public void GoToHalfPOS() {
-    setHopperPosition(HopperConstants.HOPPER_HALF_POSITION);
-  }
-
-  public void GoToAgitatePOS() {
-    setHopperPosition(HopperConstants.HOPPER_AGITATE_POSITION);
   }
 
   public void setHopperPosition(double pos) {
@@ -47,28 +23,28 @@ public class Hopper extends SubsystemBase {
     io.setHopperPosition(mHopperMotorSetpoint);
   }
 
-  // public void setHopperSpeed(double speed) {
-  //   // setState(State.MANUAL);
-  //   if (speed != 0) {
-  //     io.setHopperSpeed(speed);
-  //   } else {
-  //     io.stopHopper();
-  //   }
-  // }
-
-  public void setHopperSpeed(double speed) {
-    io.setHopperSpeed(speed);
+  public void GoToIntakePOS() {
+    setHopperPosition(HopperConstants.HOPPER_INTAKE_POSITION);
+    mHopperExtended = true;
   }
 
-  public void setAgitator(double speed) {
-    io.setAgitator(speed);
+  public void GoToHomePOS() {
+    setHopperPosition(HopperConstants.HOPPER_HOME_POSITION);
+    mHopperExtended = false;
   }
 
-  public double getCurrentElevatorPos() {
-    return HopperInputs.hopperPositon;
+  public void runAgitator() {
+    io.setAgitator(HopperConstants.kdefaultAgitatorSpeed);
   }
 
-  // set the speed of the intake
+  public void runReverseAgitator() {
+    io.setAgitator(-HopperConstants.kdefaultAgitatorSpeed);
+  }
+
+  public void stopAgitator() {
+    io.setAgitator(0);
+  }
+
   public void runIntake() {
     io.runIntake();
   }
@@ -81,13 +57,91 @@ public class Hopper extends SubsystemBase {
     io.stopIntake();
   }
 
-  // set the speed of the belt
   public void runBelt() {
     io.runBelt();
   }
 
+  public void reverseBelt() {
+    io.runClearBelt();
+  }
+
   public void stopBelt() {
     io.stopBelt();
+  }
+
+  public void runAccelerator() {
+    io.runAccelerator();
+  }
+
+  public void stopAccelerator() {
+    io.stopAccelerator();
+  }
+
+  public Command FeederRpsCmd() {
+    return new StartEndCommand(
+        () -> {
+          // double frps = SmartDashboard.getNumber("Shooter/SetFeedRps", 0.0);
+
+          runAccelerator();
+        },
+        () -> stopAccelerator());
+  }
+
+  public Command runFeedBallsToShooterCmd() {
+    return Commands.sequence(
+            Commands.runOnce(() -> runAccelerator()),
+            Commands.runOnce(() -> runBelt()),
+            Commands.runOnce(() -> runReverseAgitator()),
+            Commands.runOnce(() -> runIntake()),
+            new WaitCommand(0.5),
+            Commands.runOnce(() -> stopIntake()),
+            // Commands.runOnce(() -> io.runClearBelt()),
+            new WaitCommand(0.25),
+            Commands.runOnce(() -> runIntake()),
+            Commands.runOnce(() -> runBelt()),
+            Commands.runOnce(() -> runAgitator()),
+            new WaitCommand(1.25))
+        .repeatedly()
+        .finallyDo(
+            () -> {
+              stopBelt();
+              stopIntake();
+              stopAgitator();
+              stopAccelerator();
+            });
+  }
+
+  private double getPulse() {
+    if (mHopperExtended) {
+      return mHopperMotorSetpoint > HopperConstants.HOPPER_PULSE_IN_EXTENDED_POSITION
+          ? HopperConstants.HOPPER_PULSE_IN_EXTENDED_POSITION
+          : HopperConstants.HOPPER_PULSE_OUT_EXTENDED_POSITION;
+    }
+
+    return mHopperMotorSetpoint > HopperConstants.HOPPER_PULSE_IN_POSITION
+        ? HopperConstants.HOPPER_PULSE_IN_POSITION
+        : HopperConstants.HOPPER_PULSE_OUT_POSITION;
+  }
+
+  public Command runHopperPulseCmd() {
+    return Commands.sequence(
+            new WaitCommand(0.5), Commands.runOnce(() -> setHopperPosition(getPulse())))
+        .repeatedly()
+        .finallyDo(
+            () -> {
+              if (mHopperExtended) {
+                GoToIntakePOS();
+              } else {
+                GoToHomePOS();
+              }
+            });
+  }
+
+  @Override
+  public void periodic() {
+    io.updateInputs(HopperInputs);
+
+    Logger.processInputs(HopperConstants.SUBSYSTEM_NAME, HopperInputs);
   }
 
   public Command RunIntakeCmd() {
@@ -120,5 +174,10 @@ public class Hopper extends SubsystemBase {
             })
         .andThen(new WaitCommand(4).andThen(() -> stopIntake()))
         .handleInterrupt(() -> stopIntake());
+  }
+
+  // Manual Command
+  public void setHopperSpeed(double speed) {
+    io.setHopperSpeed(speed);
   }
 }

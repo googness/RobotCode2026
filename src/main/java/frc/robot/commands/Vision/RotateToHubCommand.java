@@ -100,7 +100,20 @@ public class RotateToHubCommand extends Command {
     double yVelocity =
         deadbandedY * RobotConfig.getInstance().getRobotMaxVelocity().in(MetersPerSecond);
 
-    // Aim at the red hub or the blue hub
+    // JAY: ???
+    //  var robotVelocity = drivetrain.getRobotRelativeSpeeds();
+    // double vx = robotVelocity.vxMetersPerSecond;
+    // double vy = robotVelocity.vyMetersPerSecond;
+
+    // // time of flight of ball
+    // double timeOfFlight = distanceMeters / 10.0;
+
+    // double virtualX = targetHub.getX() - (vx * timeOfFlight);
+    // double virtualY = targetHub.getY() - (vy * timeOfFlight);
+    // Translation2d virtualTarget = new Translation2d(virtualX, virtualY);
+
+    // Rotation2d targetAngle = virtualTarget.minus(currentPose.getTranslation()).getAngle();
+
     Translation2d targetHub;
     var alliance = DriverStation.getAlliance();
     if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red) {
@@ -110,6 +123,8 @@ public class RotateToHubCommand extends Command {
       targetHub = blueHubLocation;
       // System.out.println("Blue");
     }
+
+    // Aim at the red hub or the blue hub
 
     // Get your perfectly accurate Pose
     Pose2d currentPose = drivetrain.getPose();
@@ -133,9 +148,9 @@ public class RotateToHubCommand extends Command {
     double distanceMeters = currentPose.getTranslation().getDistance(targetHub);
     double distanceInches = Units.metersToInches(distanceMeters);
 
-    double rps = 36;
+    // double rps = 36;
 
-    distanceInches = distanceInches;
+    // distanceInches = distanceInches;
 
     // Jay Odometry code
     double odometryDistMeters = vision.getOdometryDist(targetHub.getX(), targetHub.getY());
@@ -146,27 +161,27 @@ public class RotateToHubCommand extends Command {
 
     SmartDashboard.putNumber("distToHub", useThis);
 
-    if (distanceInches >= 90) {
-      rps = 49;
-    } else if (distanceInches >= 80) {
-      rps = 47;
-    } else if (distanceInches >= 75) {
-      rps = 46;
-    } else if (distanceInches >= 70) {
-      rps = 45;
-    } else if (distanceInches >= 65) {
-      rps = 44;
-    } else if (distanceInches >= 60) {
-      rps = 43;
-    } else if (distanceInches >= 55) {
-      rps = 42;
-    } else if (distanceInches >= 50) {
-      rps = 41;
-    } else if (distanceInches >= 45) {
-      rps = 40;
-    } else if (distanceInches >= 40) {
-      rps = 39;
-    }
+    // if (distanceInches >= 90) {
+    //   rps = 49;
+    // } else if (distanceInches >= 80) {
+    //   rps = 47;
+    // } else if (distanceInches >= 75) {
+    //   rps = 46;
+    // } else if (distanceInches >= 70) {
+    //   rps = 45;
+    // } else if (distanceInches >= 65) {
+    //   rps = 44;
+    // } else if (distanceInches >= 60) {
+    //   rps = 43;
+    // } else if (distanceInches >= 55) {
+    //   rps = 42;
+    // } else if (distanceInches >= 50) {
+    //   rps = 41;
+    // } else if (distanceInches >= 45) {
+    //   rps = 40;
+    // } else if (distanceInches >= 40) {
+    //   rps = 39;
+    // }
 
     flywheel.setVelocity(useThis);
 
@@ -185,7 +200,7 @@ public class RotateToHubCommand extends Command {
     // Safely stop the drivetrain when the button is released
     // (This matches how your DriveToPose command safely ends)
     flywheel.stopFlywheel();
-    flywheel.stopAccelerator();
+    // flywheel.stopAccelerator();  Moved to Hopper
     drivetrain.stop();
     System.out.println("End");
   }

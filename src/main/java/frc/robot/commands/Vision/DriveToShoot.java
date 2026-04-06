@@ -28,7 +28,7 @@ public class DriveToShoot {
           new Pose2d(14.701, 4.016, Rotation2d.fromDegrees(180)),
           new Pose2d(14.636, 6.357, Rotation2d.fromDegrees(-141.975)));
 
-  private static Pose2d getNearestTarget(Pose2d currentPose) {
+  public static Pose2d getNearestTarget(Pose2d currentPose) {
 
     // Default to the blue list
     List<Pose2d> activeSpots = BLUE_SPOTS;

@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.lib.team3061.RobotConfig;
 import frc.lib.team3061.swerve_drivetrain.*;
 import frc.robot.subsystems.flywheels.Flywheel;
-import frc.robot.subsystems.vision.VisionSystem;
 
 public class AutoAim extends Command {
 
@@ -22,7 +21,9 @@ public class AutoAim extends Command {
   private final SwerveDrivetrain drivetrain;
 
   // Import VisionSystem
-  private final VisionSystem vision;
+  // private final VisionSystem vision;
+
+  // push
 
   private final Flywheel flywheels;
 
@@ -34,10 +35,13 @@ public class AutoAim extends Command {
   private final Translation2d blueHubLocation = new Translation2d(4.634, 4.029); // 4.634, 4.016
 
   // Constructor
-  public AutoAim(SwerveDrivetrain drivetrain, VisionSystem vision, Flywheel flywheel) {
+  public AutoAim(
+      SwerveDrivetrain drivetrain,
+      // VisionSystem vision,
+      Flywheel flywheel) {
 
     this.drivetrain = drivetrain;
-    this.vision = vision;
+    // this.vision = vision;
     this.flywheels = flywheel;
 
     // Build the PID controller using your constants
@@ -98,7 +102,7 @@ public class AutoAim extends Command {
     // If it aims too far left, add a negative degree offset to pull it right.
     // (You will need to tune this number on the carpet!)
 
-    double tuningOffsetDegrees = -3.0;
+    // double tuningOffsetDegrees = -3.0;
 
     // Run the PID math to get the spin speed
     double omegaRadiansPerSecond =

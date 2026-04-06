@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.Alert.AlertType;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.lib.team3061.RobotConfig;
@@ -25,12 +24,11 @@ import frc.lib.team3061.vision.VisionIOPhotonVision;
 import frc.lib.team3061.vision.VisionIOSim;
 import frc.robot.Constants.Mode;
 import frc.robot.commands.AutonomousCommandsFactory;
-import frc.robot.commands.Flywheel.FlywheelCmds;
-import frc.robot.commands.Hopper.HopperCmds;
 import frc.robot.commands.SwerveDrivetrainCommandFactory;
 import frc.robot.commands.Vision.DriveToShoot;
 import frc.robot.commands.Vision.ResetPosetoVision;
 import frc.robot.commands.Vision.RotateToHubCommand;
+import frc.robot.commands.Vision.ShootingZoneCommand;
 import frc.robot.configs.ThunderRobotConfig;
 import frc.robot.operator_interface.OISelector;
 import frc.robot.operator_interface.OperatorInterface;
@@ -109,12 +107,6 @@ public class RobotContainer {
       }
       vision = new Vision(visionIOs);
 
-      // FIXME: initialize other subsystems
-      // arm = new Arm(new ArmIO() {});
-      // elevator = new Elevator(new ElevatorIO() {});
-      // manipulator = new Manipulator(new ManipulatorIO() {});
-      // shooter = new Shooter(new ShooterIO() {});
-      // visualization = new RobotVisualization(elevator);
       flywheel = new Flywheel(new FlywheelIO() {});
       hopper = new Hopper(new HopperIO() {});
       jayvision = new VisionSystem(swerveDrivetrain);
@@ -138,7 +130,7 @@ public class RobotContainer {
     //   AutonomousCommandsFactory.getInstance().configureAutoCommands(swerveDrivetrain, vision);
     // }
     AutonomousCommandsFactory.getInstance()
-        .configureAutoCommands(swerveDrivetrain, vision, hopper, flywheel, jayvision);
+        .configureAutoCommands(swerveDrivetrain, hopper, flywheel, jayvision);
 
     // Alert when tuning
     if (Constants.TUNING_MODE) {
@@ -180,12 +172,6 @@ public class RobotContainer {
     }
     vision = new Vision(visionIOs);
 
-    // FIXME: initialize other subsystems
-    // arm = new Arm(new ArmIO() {});
-    // elevator = new Elevator(new ElevatorIO() {});
-    // manipulator = new Manipulator(new ManipulatorIO() {});
-    // shooter = new Shooter(new ShooterIO() {});
-    // visualization = new RobotVisualization(elevator);
     flywheel = new Flywheel(new FlywheelIOTalonFX() {});
     hopper = new Hopper(new HopperIOTalonFX() {});
     jayvision = new VisionSystem(swerveDrivetrain);
@@ -216,12 +202,6 @@ public class RobotContainer {
     }
     vision = new Vision(visionIOs);
 
-    // FIXME: initialize other subsystems
-    // arm = new Arm(new ArmIOTalonFX());
-    // elevator = new Elevator(new ElevatorIOTalonFX());
-    // manipulator = new Manipulator(new ManipulatorIOTalonFX());
-    // shooter = new Shooter(new ShooterIOTalonFX());
-    // visualization = new RobotVisualization(elevator);
     flywheel = new Flywheel(new FlywheelIOTalonFX());
     hopper = new Hopper(new HopperIOTalonFX());
     jayvision = new VisionSystem(swerveDrivetrain);
@@ -253,6 +233,52 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     configureDrivetrainCommands();
+
+    oi.testSpeed()
+        .toggleOnTrue(new InstantCommand(() -> flywheel.setVelocity(47)))
+        .onFalse(new InstantCommand(() -> flywheel.setVelocity(0)));
+
+    oi.setAgitator()
+        .whileTrue(
+            new ShootingZoneCommand(
+                swerveDrivetrain, jayvision, () -> oi.getTranslateX(), () -> oi.getTranslateY()));
+
+    oi.jayShot()
+        .whileTrue(
+            flywheel
+                .runScoreWithVisionCmd(jayvision)
+                .alongWith(
+                    new WaitCommand(.75)
+                        .andThen(
+                            hopper
+                                .runFeedBallsToShooterCmd()
+                                .alongWith(hopper.runHopperPulseCmd()))));
+
+    oi.runIntake()
+        .onTrue(
+            new InstantCommand(hopper::GoToIntakePOS)
+                .alongWith(new WaitCommand(0.15))
+                .andThen(hopper::runIntake))
+        .onFalse(new InstantCommand(hopper::stopIntake));
+
+    // Hopper Commands
+    oi.HopperToHomePos().onTrue(new InstantCommand(hopper::GoToHomePOS));
+
+    oi.HopperToIntakePos().onTrue(new InstantCommand(hopper::GoToIntakePOS));
+
+    oi.resetVisionPos().onTrue(new ResetPosetoVision(jayvision));
+
+    oi.RotateToTag()
+        .whileTrue(
+            new RotateToHubCommand(
+                swerveDrivetrain,
+                jayvision,
+                flywheel,
+                () -> oi.getTranslateX(),
+                () -> oi.getTranslateY()));
+
+    oi.DriveToShoot().whileTrue(DriveToShoot.driveToShootCommand(swerveDrivetrain));
+
     // configureVisionCommands();
 
     // new JoystickButton(TunerStick, XboxController.Button.kY.value)
@@ -283,14 +309,6 @@ public class RobotContainer {
            .onFalse(new InstantCommand(() -> flywheel.stopFlywheel()));
     */
 
-    oi.testSpeed()
-        .toggleOnTrue(new InstantCommand(() -> flywheel.setVelocity(47)))
-        .onFalse(new InstantCommand(() -> flywheel.setVelocity(0)));
-
-    oi.setAgitator()
-        .onTrue(new InstantCommand(() -> hopper.setAgitator(0.2)))
-        .onFalse(new InstantCommand(() -> hopper.setAgitator(0)));
-
     // oi.jayShot()
     //     .whileTrue(
     //         FlywheelCmds.runAccelerator(flywheel)
@@ -309,39 +327,46 @@ public class RobotContainer {
     //             .alongWith(HopperCmds.stopBelt(hopper))
     //             .alongWith(HopperCmds.stopIntake(hopper)));
 
-    oi.jayShot()
-        .whileTrue(
-            FlywheelCmds.getFixedShot(flywheel)
-                .andThen(new WaitCommand(.75))
-                .andThen(
-                    new InstantCommand(() -> flywheel.runAccelerator())
-                        .alongWith(new InstantCommand(() -> hopper.runBelt()))
-                        .alongWith(new InstantCommand(() -> hopper.setAgitator(0.7))))
-                .alongWith(new InstantCommand(() -> hopper.runIntake()))
-                .andThen(new WaitCommand(1.75))
-                .andThen(HopperCmds.SetHopperPOS(17, hopper))
-                .andThen(new WaitCommand(.5))
-                .andThen(HopperCmds.SetHopperPOS(21, hopper))
-                .andThen(new WaitCommand(.5))
-                .andThen(HopperCmds.SetHopperPOS(17, hopper))
-                .andThen(new WaitCommand(.5))
-                .andThen(HopperCmds.SetHopperPOS(21, hopper))
-                .andThen(new WaitCommand(.5))
-                .andThen(HopperCmds.SetHopperPOS(17, hopper))
-                .andThen(new WaitCommand(.5))
-                .andThen(HopperCmds.SetHopperPOS(21, hopper))
-                .andThen(new WaitCommand(1))
-                .andThen(HopperCmds.SetHopperPOS(15, hopper))
-                .andThen(new WaitCommand(.5))
-                .andThen(HopperCmds.SetHopperPOS(20, hopper))
-                .andThen(new WaitCommand(.5))
-                .andThen(HopperCmds.SetHopperPOS(2, hopper)))
-        .onFalse(
-            new InstantCommand(() -> flywheel.stopFlywheel())
-                .alongWith(new InstantCommand(() -> flywheel.stopAccelerator()))
-                .alongWith(new InstantCommand(() -> hopper.stopBelt()))
-                .alongWith(new InstantCommand(() -> hopper.setAgitator(0)))
-                .alongWith(new InstantCommand(() -> hopper.stopIntake())));
+    // oi.jayShot()
+    //     .whileTrue(
+    //         FlywheelCmds.getFixedShot(flywheel)
+    //             .andThen(new WaitCommand(.75))
+    //
+    // .andThen(hopper.runFeedBallsToShooterCmd().alongWith(hopper.runHopperPulseCmd())));
+
+    // oi.jayShot()
+    //     .whileTrue(
+    //         FlywheelCmds.getFixedShot(flywheel)
+    //             .andThen(new WaitCommand(.75))
+    //             .andThen(
+    //                 new InstantCommand(() -> flywheel.runAccelerator())
+    //                     .alongWith(new InstantCommand(() -> hopper.runBelt()))
+    //                     .alongWith(new InstantCommand(() -> hopper.runAgitator())))
+    //             .alongWith(new InstantCommand(() -> hopper.runIntake()))
+    //             .andThen(new WaitCommand(1.75))
+    //             .andThen(HopperCmds.SetHopperPOS(17, hopper))
+    //             .andThen(new WaitCommand(.5))
+    //             .andThen(HopperCmds.SetHopperPOS(21, hopper))
+    //             .andThen(new WaitCommand(.5))
+    //             .andThen(HopperCmds.SetHopperPOS(17, hopper))
+    //             .andThen(new WaitCommand(.5))
+    //             .andThen(HopperCmds.SetHopperPOS(21, hopper))
+    //             .andThen(new WaitCommand(.5))
+    //             .andThen(HopperCmds.SetHopperPOS(17, hopper))
+    //             .andThen(new WaitCommand(.5))
+    //             .andThen(HopperCmds.SetHopperPOS(21, hopper))
+    //             .andThen(new WaitCommand(1))
+    //             .andThen(HopperCmds.SetHopperPOS(15, hopper))
+    //             .andThen(new WaitCommand(.5))
+    //             .andThen(HopperCmds.SetHopperPOS(20, hopper))
+    //             .andThen(new WaitCommand(.5))
+    //             .andThen(HopperCmds.SetHopperPOS(2, hopper)))
+    //     .onFalse(
+    //         new InstantCommand(() -> flywheel.stopFlywheel())
+    //             .alongWith(new InstantCommand(() -> flywheel.stopAccelerator()))
+    //             .alongWith(new InstantCommand(() -> hopper.stopBelt()))
+    //             .alongWith(new InstantCommand(() -> hopper.stopAgitator()))
+    //             .alongWith(new InstantCommand(() -> hopper.stopIntake())));
 
     // oi.jayShot().whileTrue(
     //               FlywheelCmds.getFixedShot(flywheel)
@@ -357,30 +382,6 @@ public class RobotContainer {
     //               .andThen(HopperCmds.GoToHomePos(hopper));
 
     // Intake Commands
-    oi.runIntake()
-        .onTrue(
-            new InstantCommand(hopper::GoToIntakePOS)
-                .alongWith(new WaitCommand(0.15))
-                .andThen(hopper::runIntake))
-        .onFalse(new InstantCommand(hopper::stopIntake));
-
-    // Hopper Commands
-    oi.HopperToHomePos().onTrue(new InstantCommand(hopper::GoToHomePOS));
-
-    oi.HopperToIntakePos().onTrue(new InstantCommand(hopper::GoToIntakePOS));
-
-    oi.resetVisionPos().onTrue(new ResetPosetoVision(jayvision));
-
-    oi.RotateToTag()
-        .whileTrue(
-            new RotateToHubCommand(
-                swerveDrivetrain,
-                jayvision,
-                flywheel,
-                () -> oi.getTranslateX(),
-                () -> oi.getTranslateY()));
-
-    oi.DriveToShoot().whileTrue(DriveToShoot.driveToShootCommand(swerveDrivetrain));
 
     // oi.runIntake()
     //     .onTrue(new InstantCommand(hopper::runIntake))
@@ -532,19 +533,19 @@ public class RobotContainer {
     // }
   }
 
-  private void configureVisionCommands() {
-    // enable/disable vision
-    oi.getVisionIsEnabledTrigger()
-        .onTrue(
-            Commands.runOnce(() -> vision.enable(true))
-                .ignoringDisable(true)
-                .withName("enable vision"));
-    oi.getVisionIsEnabledTrigger()
-        .onFalse(
-            Commands.runOnce(() -> vision.enable(false))
-                .ignoringDisable(true)
-                .withName("disable vision"));
-  }
+  // private void configureVisionCommands() {
+  //   // enable/disable vision
+  //   oi.getVisionIsEnabledTrigger()
+  //       .onTrue(
+  //           Commands.runOnce(() -> vision.enable(true))
+  //               .ignoringDisable(true)
+  //               .withName("enable vision"));
+  //   oi.getVisionIsEnabledTrigger()
+  //       .onFalse(
+  //           Commands.runOnce(() -> vision.enable(false))
+  //               .ignoringDisable(true)
+  //               .withName("disable vision"));
+  // }
 
   /**
    * Check if the alliance color has changed; if so, update the vision subsystem and Field2d

@@ -70,6 +70,8 @@ public interface SwerveDrivetrainIO {
     };
 
     Current averageDriveCurrent = Amps.of(0.0);
+    AngularVelocity _angularVelocityZWorld = DegreesPerSecond.of(0.0); // Jay:  Hi!
+
     Angle rawHeading = Degrees.of(0.0);
     Angle pitch = Degrees.of(0.0);
     Angle roll = Degrees.of(0.0);

@@ -326,6 +326,8 @@ public class SwerveDrivetrainIOCTRE extends SwerveDrivetrain<TalonFX, TalonFX, C
   // gyro status signals
   private StatusSignal<Angle> pitchStatusSignal;
   private StatusSignal<Angle> rollStatusSignal;
+  private StatusSignal<AngularVelocity> _angularVelocityZWorldSignal;
+
   private final Debouncer connectedDebouncer = new Debouncer(0.5);
 
   // brake mode
@@ -379,8 +381,10 @@ public class SwerveDrivetrainIOCTRE extends SwerveDrivetrain<TalonFX, TalonFX, C
 
     this.rollStatusSignal = this.getPigeon2().getRoll();
     this.pitchStatusSignal = this.getPigeon2().getPitch();
+    this._angularVelocityZWorldSignal = this.getPigeon2().getAngularVelocityZWorld();
 
-    Phoenix6Util.registerSignals(true, rollStatusSignal, pitchStatusSignal);
+    Phoenix6Util.registerSignals(
+        true, rollStatusSignal, pitchStatusSignal, _angularVelocityZWorldSignal);
 
     // register all drivetrain-related devices with FaultReporter
     FaultReporter.getInstance().registerHardware(SUBSYSTEM_NAME, "Pigeon", this.getPigeon2());
@@ -513,10 +517,12 @@ public class SwerveDrivetrainIOCTRE extends SwerveDrivetrain<TalonFX, TalonFX, C
 
     inputs.drivetrain.gyroConnected =
         connectedDebouncer.calculate(
-            BaseStatusSignal.isAllGood(pitchStatusSignal, rollStatusSignal));
+            BaseStatusSignal.isAllGood(
+                pitchStatusSignal, rollStatusSignal, _angularVelocityZWorldSignal));
 
     inputs.drivetrain.pitch = this.pitchStatusSignal.getValue();
     inputs.drivetrain.roll = this.rollStatusSignal.getValue();
+    inputs.drivetrain._angularVelocityZWorld = this._angularVelocityZWorldSignal.getValue();
 
     inputs.drivetrain.customPose = this.getState().Pose;
 

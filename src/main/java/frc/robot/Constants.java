@@ -29,18 +29,16 @@ public final class Constants {
   public static final boolean TUNING_MODE = false;
   public static final boolean DEMO_MODE = false;
 
-  private static final RobotType ROBOT = RobotType.ROBOT_THUNDER;
+  private static final RobotType ROBOT = RobotType.ROBOT_SIMBOT;
 
   private static final Alert invalidRobotAlert =
       new Alert("Invalid robot selected, using competition robot as default.", AlertType.kError);
 
-  // FIXME: update for various robots
   public enum RobotType {
     ROBOT_THUNDER,
     ROBOT_SIMBOT,
   }
 
-  // FIXME: update for various robots
   public static RobotType getRobot() {
     if (RobotBase.isReal()) {
       // if (ROBOT == RobotType.ROBOT_SIMBOT || ROBOT == RobotType.ROBOT_XRP) { // Invalid robot
@@ -56,7 +54,6 @@ public final class Constants {
     }
   }
 
-  // FIXME: update for various robots
   public static Mode getMode() {
     switch (getRobot()) {
         // case ROBOT_DEFAULT, ROBOT_PRACTICE, ROBOT_PRACTICE_BOARD, ROBOT_COMPETITION:

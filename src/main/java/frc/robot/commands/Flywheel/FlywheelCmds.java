@@ -33,14 +33,6 @@ public class FlywheelCmds {
   //     () -> flywheel.stopFlywheel());
   // }
 
-  public static Command runAccelerator(Flywheel flywheel) {
-    return new InstantCommand(() -> flywheel.runAccelerator());
-  }
-
-  public static Command stopAccelerator(Flywheel flywheel) {
-    return new InstantCommand(() -> flywheel.stopAccelerator());
-  }
-
   // New Commands for St. Cloud
 
 }

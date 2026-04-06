@@ -1,0 +1,20 @@
+ToDo list of everything that I want to test tomorrow
+
+1. I want to test the auto I made. It is called jaytestauto. It is 2 simple paths. The main things we are looking at is how close our odometry is, if the robot has any issues mechanically, and if it throws off our megatag 2 pose.
+
+2. I want to try out the new shuttle code I wrote. I tried to do most of it for you so you could just test it and focus on other things. I hope it works. For now, I have just added the x and y coordinates (I get them with path planner if you need to add or get more coordinates) and I have added a method to get the closest translation to your robot. I have added it all into the visionsystem.
+
+3. Updated the position of the photon cameras and now they should be in the right spots. Maybe double check the positive and negatives, but I think I have them right. Don't just assume I am wrong. We should definitely get the 3d pose estimation on the photon cameras working as soon as possible. We have 2 additional cameras on the side that we can mess around with, but that is lower priority. The ones on the side might move a little bit, but Ben said he is making more permanant mounts for them.
+
+4. I want to add a camera on the robot that faces towards the intake. The main purpose for this camera will be for Chris to find balls when he is across the field. He needs a fast streaming camera. Photon vision might be a little laggy but I think we can fix it or turn off april tag processing. Worse case Scenario, we use our extra limelight 4. Now that I am thinking of it, what is stopping us from mounting a camera for april tags right on the back of the shooter? But for now, that is not even remotely a concern of mine.
+
+5. One of the later things I want to test and tune is my rotation code. The main one I am using right now is shooting zone command. Right now, I have a variable in there called minimumFrictionSpeed which is supposed to act like KS and give the motor enough power to rotate to target. I have found success in this and I think I actually have tuned the rotation really well already. The very first time we rotate, it always goes crazy, but every rotation after that is fine and very smooth. You can play with the speed, acceleration, PID values, and even the KS value if you want. 
+
+6. I want to make a dynamic reset odometry to vision command. I think being able to reset it with both photon vision and megatag 2 is going to be the smartest decision. Maybe if we add that limelight 4 camera on the back of the shooter like I mentioned earlier, that would also help with our pose. We probably shouldn't worry about that right now though. 
+
+7. Tune the Limelight settings because I think they might be off right now and now actually picking up any AprilTags.
+
+8. Add the commands we will use for St. Cloud. Do it for Auto too just so we are prepared when making autos. Jersie is excited to start making autos. 
+
+9. If I think of anything else, I will add it during school.
+

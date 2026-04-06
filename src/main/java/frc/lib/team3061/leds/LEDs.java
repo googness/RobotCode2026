@@ -114,8 +114,8 @@ public abstract class LEDs extends SubsystemBase {
    * This is handled by specifying the length as half the actual length and mirroring the buffer
    * before updating the LEDs.
    */
-  protected static final boolean MIRROR_LEDS = true;
-  protected static final int ACTUAL_LENGTH = 42; // RobotConfig.getInstance().getLEDCount();
+  protected static final boolean MIRROR_LEDS = false;
+  protected static final int ACTUAL_LENGTH = 0; // RobotConfig.getInstance().getLEDCount();
   protected static final int LENGTH = MIRROR_LEDS ? ACTUAL_LENGTH / 2 : ACTUAL_LENGTH;
   private static final int STATIC_LENGTH = LENGTH / 2;
   private static final int STATIC_SECTION_LENGTH = STATIC_LENGTH / 3;

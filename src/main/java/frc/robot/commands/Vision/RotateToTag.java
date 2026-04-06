@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.lib.team3061.RobotConfig;
 import frc.lib.team3061.swerve_drivetrain.*;
 import frc.robot.subsystems.vision.LimelightHelpers;
-import frc.robot.subsystems.vision.VisionSystem;
 import java.util.List;
 import java.util.function.DoubleSupplier;
 import org.littletonrobotics.junction.Logger;
@@ -19,7 +18,7 @@ public class RotateToTag extends Command {
 
   // Bring in your vision and drivetrain subsystems
   private final SwerveDrivetrain drivetrain;
-  private final VisionSystem vision;
+  // private final VisionSystem vision;
 
   // Allow driver controls for strafing
 
@@ -38,11 +37,11 @@ public class RotateToTag extends Command {
   // Setup the constructor
   public RotateToTag(
       SwerveDrivetrain drivetrain,
-      VisionSystem vision,
+      // VisionSystem vision,
       DoubleSupplier xSupplier,
       DoubleSupplier ySupplier) {
     // Bring in the required subsystems and driver joystick inputs
-    this.vision = vision;
+    // this.vision = vision;
     this.drivetrain = drivetrain;
     this.xSupplier = xSupplier;
     this.ySupplier = ySupplier;

@@ -20,23 +20,23 @@ import frc.lib.team3061.swerve_drivetrain.swerve.SwerveConstants;
  */
 public class XRPRobotConfig extends RobotConfig {
 
-  // FIXME: update robot dimensions
+  // : update robot dimensions
   private static final Mass MASS = Kilograms.of(0.418);
   private static final MomentOfInertia MOI = KilogramSquareMeters.of(0.0025149667);
   private static final Distance TRACKWIDTH = Meters.of(0.16);
   private static final Distance WHEELBASE = Meters.of(0.13);
   private static final Distance WHEEL_RADIUS = Meters.of(0.028575);
   private static final double WHEEL_COEFFICIENT_OF_FRICTION =
-      1.2; // FIXME: update based on wheel coefficient of friction
+      1.2; // : update based on wheel coefficient of friction
   private static final Translation2d FRONT_RIGHT_CORNER_POSITION = new Translation2d(0.095, -0.095);
   private static final Distance ROBOT_WIDTH_WITH_BUMPERS = Meters.of(0.19);
   private static final Distance ROBOT_LENGTH_WITH_BUMPERS = Meters.of(0.19);
 
-  // FIXME: determine maximum velocities empirically
+  // : determine maximum velocities empirically
   private static final LinearVelocity MAX_VELOCITY = MetersPerSecond.of(0.5);
   private static final AngularVelocity MAX_ANGULAR_VELOCITY = RadiansPerSecond.of(3.0);
 
-  // FIXME: specify maximum velocity and acceleration and tune PID values for auto paths
+  // : specify maximum velocity and acceleration and tune PID values for auto paths
   private static final double AUTO_DRIVE_P_CONTROLLER = 1.0;
   private static final double AUTO_DRIVE_I_CONTROLLER = 0.0;
   private static final double AUTO_DRIVE_D_CONTROLLER = 0.0;
